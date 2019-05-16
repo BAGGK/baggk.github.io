@@ -3,54 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://www.baggk.xin/categories/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.baggk.xin/post/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-15T18:41:25+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.baggk.xin/tags/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-15T18:41:25+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/tags/chinese/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>http://www.baggk.xin/2019/05/temp/</loc>
+    <lastmod>2019-05-15T18:41:25+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/categories/features/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
+    <loc>http://www.baggk.xin/tags/thinyhttpd/</loc>
+    <lastmod>2019-05-15T18:41:25+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.baggk.xin/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-15T18:41:25+08:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.baggk.xin/categories/tranquilpeak/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.baggk.xin/2013/10/chinese-test/</loc>
-    <lastmod>2013-10-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>http://www.baggk.xin/archives/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.baggk.xin/categories/</loc>
     <priority>0</priority>
   </url>
   
