@@ -2,48 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on lzk&#39;s blog</title>
-    <link>http://www.baggk.xin/post/</link>
+    <link>hhtp://www.baggk.xin/post/</link>
     <description>Recent content in Posts on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 19 May 2019 12:47:14 +0800</lastBuildDate>
     
-	<atom:link href="http://www.baggk.xin/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="hhtp://www.baggk.xin/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>OS_NODE_1</title>
-      <link>http://www.baggk.xin/2019/05/os_node_1/</link>
+      <link>hhtp://www.baggk.xin/2019/05/os_node_1/</link>
       <pubDate>Sun, 19 May 2019 12:47:14 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/os_node_1/</guid>
+      <guid>hhtp://www.baggk.xin/2019/05/os_node_1/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Redis_note_1</title>
-      <link>http://www.baggk.xin/2019/05/redis_note_1/</link>
+      <link>hhtp://www.baggk.xin/2019/05/redis_note_1/</link>
       <pubDate>Fri, 17 May 2019 20:24:21 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/redis_note_1/</guid>
+      <guid>hhtp://www.baggk.xin/2019/05/redis_note_1/</guid>
       <description>&lt;p&gt;​   redis入门。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>UNIX_NOTE_1</title>
-      <link>http://www.baggk.xin/2019/05/unix_note_1/</link>
+      <link>hhtp://www.baggk.xin/2019/05/unix_note_1/</link>
       <pubDate>Thu, 16 May 2019 19:51:49 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/unix_note_1/</guid>
+      <guid>hhtp://www.baggk.xin/2019/05/unix_note_1/</guid>
       <description>&lt;p&gt;用来记录自己学习UNIX认为的重点，以及感悟。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>tinyHttp</title>
-      <link>http://www.baggk.xin/2019/05/tinyhttp/</link>
+      <link>hhtp://www.baggk.xin/2019/05/tinyhttp/</link>
       <pubDate>Wed, 15 May 2019 18:41:25 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/tinyhttp/</guid>
+      <guid>hhtp://www.baggk.xin/2019/05/tinyhttp/</guid>
       <description>&lt;p&gt;最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。&lt;/p&gt;</description>
     </item>
     
