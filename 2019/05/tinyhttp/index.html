@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.55.5 with theme Tranquilpeak 0.4.3-SNAPSHOT">
+<meta name="author" content="lzk_baggk">
+<meta name="keywords" content="">
+<meta name="description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+
+
+<meta property="og:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tinyHttp">
+<meta name="twitter:title" content="tinyHttp">
+<meta property="og:url" content="http://www.baggk.xin/2019/05/tinyhttp/">
+<meta property="twitter:url" content="http://www.baggk.xin/2019/05/tinyhttp/">
+<meta property="og:site_name" content="lzk&#39;s blog">
+<meta property="og:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta name="twitter:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2019-05-15T18:41:25">
+  
+  
+    <meta property="article:modified_time" content="2019-05-15T18:41:25">
+  
+  
+  
+  
+    
+      <meta property="article:tag" content="Thinyhttpd">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="http://www.baggk.xin/images/lzk_weixing.jpg">
+  <meta property="twitter:image" content="http://www.baggk.xin/images/lzk_weixing.jpg">
+
+
+    <title>tinyHttp</title>
+
+    <link rel="icon" href="http://www.baggk.xin/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="http://www.baggk.xin/2019/05/tinyhttp/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="http://www.baggk.xin/css/style-nnm2spxvve8onlujjlegkkytaehyadd4ksxc1hyzzq9a2wvtrgbljqyulomn.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="http://www.baggk.xin/">lzk&#39;s blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="http://www.baggk.xin/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="http://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="http://www.baggk.xin/#about">
+          <img class="sidebar-profile-picture" src="http://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">lzk_baggk</h4>
+        
+          <h5 class="sidebar-profile-bio">想去的地方很远</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/BAGGK" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://www.baggk.xin/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      tinyHttp
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-05-15T18:41:25&#43;08:00">
+        
+  五月 15, 2019
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。</p>
+
+<h3 id="intptr-t">intptr_t</h3>
+
+<p>具体代码在linux平台的/usr/include/stdint.h头文件中。</p>
+
+<pre><code class="language-c">/* Types for `void *' pointers.  */
+#if __WORDSIZE == 64
+# ifndef __intptr_t_defined
+typedef long int        intptr_t;
+#  define __intptr_t_defined
+# endif
+typedef unsigned long int   uintptr_t;
+#else
+# ifndef __intptr_t_defined
+typedef int         intptr_t;
+#  define __intptr_t_defined
+# endif
+typedef unsigned int        uintptr_t;
+</code></pre>
+
+<p>应该是为了提高平台的可移植性。比如在64位的操作系统中，在指针的大小是8字节，但是4字节。</p>
+
+<pre><code class="language-c">//C code , arg 是 void * 
+int clinet = (intptr_t) arg；
+</code></pre>
+
+<h3 id="strcasecmp">strcasecmp</h3>
+
+<p>无视大小写，比较字符串</p>
+
+<pre><code class="language-c">if( strcasecmp(method,&quot;GET&quot;) );//get、GET和gEt都可以
+</code></pre>
+
+<h3 id="stat">stat</h3>
+
+<p>通过文件名filename获取文件信息，并保存在buf所指的结构体stat中</p>
+
+<blockquote>
+<p>定义函数:    int stat(const char *file_name, struct stat *buf);</p>
+</blockquote>
+
+<pre><code class="language-c">struct stat {
+    dev_t         st_dev;       //文件的设备编号
+    ino_t         st_ino;       //节点
+    mode_t        st_mode;      //文件的类型和存取的权限
+    nlink_t       st_nlink;     //连到该文件的硬连接数目，刚建立的文件值为1
+    uid_t         st_uid;       //用户ID
+    gid_t         st_gid;       //组ID
+    dev_t         st_rdev;      //(设备类型)若此文件为设备文件，则为其设备编号
+    off_t         st_size;      //文件字节数(文件大小)
+    unsigned long st_blksize;   //块大小(文件系统的I/O 缓冲区大小)
+    unsigned long st_blocks;    //块数
+    time_t        st_atime;     //最后一次访问时间
+    time_t        st_mtime;     //最后一次修改时间
+    time_t        st_ctime;     //最后一次改变时间(指属性)
+};
+</code></pre>
+
+<p>stat可以最主要的</p>
+
+<h3 id="tcp粘包问题">TCP粘包问题</h3>
+
+<p>来自 <a href="https://blog.csdn.net/asklw/article/details/79244386">asklw</a></p>
+
+<blockquote>
+<ul>
+<li><p>TCP（transport control protocol，传输控制协议）是面向连接的，面向流的，提供高可靠性服务。收发两端（客户端和服务器端）都要有一一成对的socket，因此，发送端为了将多个发往接收端的包，更有效的发到对方，使用了优化方法（Nagle算法），将多次间隔较小且数据量小的数据，合并成一个大的数据块，然后进行封包。这样，接收端，就难于分辨出来了，必须提供科学的拆包机制。 <strong>即面向流的通信是无消息保护边界的。</strong></p></li>
+
+<li><p>UDP（user datagram protocol，用户数据报协议）是无连接的，面向消息的，提供高效率服务。不会使用块的合并优化算法，, 由于UDP支持的是一对多的模式，所以接收端的skbuff(套接字缓冲区）采用了链式结构来记录每一个到达的UDP包，在每个UDP包中就有了消息头（消息来源地址，端口等信息），这样，对于接收端来说，就容易进行区分处理了。 <strong>即面向消息的通信是有消息保护边界的。</strong></p></li>
+</ul>
+</blockquote>
+
+<p>由于TCP无消息保护边界, 需要在消息接收端处理消息边界问题。也就是为什么我们以前使用UDP没有此问题。 反而使用TCP后，出现少包的现象</p>
+
+<p>来自 lzk_baggk</p>
+
+<blockquote>
+<p>在TCP有流水线之后，本来应该是发送方不停的发送数据，来提高信道的使用率。但是可能是因为实际上这可能并不是很终于，而且大量的小报文会减低有用信息在实际传输过程中的比例，因为需要为每个小报文都加一个TCP头。所以就有了Nagle算法。具体是因为什么。我还没有完全的想清楚。所以这里先暂时记录一下自己的想法</p>
+</blockquote>
+
+<h3 id="大小端与网络字节序">大小端与网络字节序</h3>
+
+<p>​   大小端是网络字节数，是网络编程中，需要考虑的问题。首先，发送方要将本主机的字序换成网络的字节序，然后再交给目的主机，之后目的直接换成自己的字节序。</p>
+
+<h4 id="什么是大端模式-小端模式">什么是大端模式、小端模式</h4>
+
+<p>​   “大端”和”小端”表示<strong>多字节值</strong>的哪一端存储在该值的起始地址处;小端存储在起始地址处,即是小端字节序;大端存储在起始地址处,即是大端字节序;具体的说：</p>
+
+<ul>
+<li><p>大端字节序（Big Endian）：最高有效位存于最低内存地址处，最低有效位存于最高内存处；</p></li>
+
+<li><p>小端字节序（Little Endian）：最高有效位存于最高内存地址，最低有效位存于最低内存处。</p>
+
+<p>如下图：当以不同的存储方式，存储数据为0x12345678时：
+ 　　<img src="http://www.baggk.xin/images/bigend.jpg" alt="大小端模式示意图" /></p></li>
+</ul>
+
+<h4 id="网络字节序">网络字节序</h4>
+
+<p>　　网络上传输的数据都是字节流,对于一个多字节数值,在进行网络传输的时候,先传递哪个字节?也就是说,当接收端收到第一个字节的时候,它将这个字节作为高位字节还是低位字节处理,是一个比较有意义的问题;
+　　UDP/TCP/IP协议规定:<strong>把接收到的第一个字节当作高位字节看待</strong>,这就要求发送端发送的第一个字节是高位字节;而在发送端发送数据时,发送的第一个字节是该数值在内存中的起始地址处对应的那个字节,也就是说,该数值在内存中的起始地址处对应的那个字节就是要发送的第一个高位字节(即:高位字节存放在低地址处);由此可见,多字节数值在发送之前,在内存中因该是以大端法存放的;
+　　<strong>所以说,网络字节序是大端字节序；</strong></p>
+
+<h3 id="sockaddr和sockaddr-in详解">sockaddr和sockaddr_in详解</h3>
+
+<p>truct sockaddr和struct sockaddr_in这两个结构体用来处理网络通信的地址。</p>
+
+<h4 id="一-sockaddr">一、sockaddr</h4>
+
+<p><strong>sockaddr</strong>在头文件<code>#include &lt;sys/socket.h&gt;</code>中定义，sockaddr的缺陷是：sa_data把目标地址和端口信息混在一起了，如下：</p>
+
+<pre><code class="language-c">struct sockaddr {  
+     sa_family_t sin_family;//地址族
+　　  char sa_data[14]; //14字节，包含套接字中的目标地址和端口信息               
+};
+</code></pre>
+
+<h4 id="二-sockaddr-in">二、sockaddr_in</h4>
+
+<p><strong>sockaddr_in</strong>在头文件<code>#include&lt;netinet/in.h&gt;或#include &lt;arpa/inet.h&gt;</code>中定义，该结构体解决了sockaddr的缺陷，把port和addr 分开储存在两个变量中，如下：</p>
+
+<pre><code class="language-c">struct sockaddr_in{
+    sa_family_t         sin_family;     //地址族(Address Family)
+    uint16_t            sin_port;       //16位 TCP/UDP端口号
+    struct in_addr      sin_addr;       //32位IP地址
+    char                sin_zero[0];    //不使用
+};
+
+struct in_addr{
+    In_addr_t           s_addr;         //32位IPv4的地址
+}
+</code></pre>
+
+<p>sin_port和sin_addr都必须是网络字节序（NBO），一般可视化的数字都是主机字节序（HBO）。</p>
+
+<p>来自lzk_baggk</p>
+
+<blockquote>
+<p>sockaddr 与 sockaddr_in都是用来网络通信的，在socket在刚刚被设计的时候，并不是为了TCP/IP设计的，而是希望未来可以兼容更多的网络协议。</p>
+
+<p>使用面向对象的思想，可以这样认为，sockaddr是一个基类，sockaddr_in是sockaddr的一个派生类，专门用在internet网络中。sockaddr_in命名的那个in，应该也就是internet的意思了。</p>
+</blockquote>
+
+<h3 id="getsockeopt与setsockopt">getsockeopt与setsockopt</h3>
+
+<p>主要的作用是获取、设置影响套接口的选项。</p>
+
+<p>原型：</p>
+
+<pre><code class="language-c">#include &lt;sys/socket.h&gt;
+
+int getsockopt(int sockfg,int level,int optname,void *optval,socklen_t *optlne);
+int setsockopt(int sockfg,int level,int optname,const void *optval,socklent_t *optlen);
+</code></pre>
+
+<p>我这里主要介绍的参数是</p>
+
+<p>level:SOL_SOCKET    optname = SO_REUSEADDR;</p>
+
+<h4 id="so-reuseaddr">SO_REUSEADDR</h4>
+
+<p>SO_REUSEADDR的作用主要包括两点
+ <strong>1、改变了通配绑定时处理源地址冲突的处理方式</strong>，其具体的表现方式为：未设置SO_REUSEADDR时，socketA先绑定到0.0.0.0:21，后socketB绑定192.168.0.1:21将失败，不符合规则3。但在设置SO_REUSEADDR后socketB将绑定成功。并且这个设置对于socketA（通配绑定）和socketB（特定绑定）的绑定是顺序无关的。</p>
+
+<table>
+<thead>
+<tr>
+<th>SO_REUSEADDR</th>
+<th>先绑定socketA</th>
+<th>后绑定socketB</th>
+<th>绑定socketB的结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>无关</td>
+<td>192.168.0.1:21</td>
+<td>192.168.0.1:21</td>
+<td>Error (EADDRINUSE)</td>
+</tr>
+
+<tr>
+<td>无关</td>
+<td>192.168.0.1:21</td>
+<td>10.0.0.1:21</td>
+<td>OK</td>
+</tr>
+
+<tr>
+<td>无关</td>
+<td>10.0.0.1:21</td>
+<td>192.168.0.1:21</td>
+<td>OK</td>
+</tr>
+
+<tr>
+<td>disable</td>
+<td>0.0.0.0:21</td>
+<td>192.168.1.0:21</td>
+<td>Error (EADDRINUSE)</td>
+</tr>
+
+<tr>
+<td>disable</td>
+<td>192.168.1.0:21</td>
+<td>0.0.0.0:21</td>
+<td>Error (EADDRINUSE)</td>
+</tr>
+
+<tr>
+<td>enable</td>
+<td>0.0.0.0:21</td>
+<td>192.168.1.0:21</td>
+<td>OK</td>
+</tr>
+
+<tr>
+<td>enable</td>
+<td>192.168.1.0:21</td>
+<td>0.0.0.0:21</td>
+<td>OK</td>
+</tr>
+
+<tr>
+<td>无关</td>
+<td>0.0.0.0:21</td>
+<td>0.0.0.0:21</td>
+<td>Error (EADDRINUSE)</td>
+</tr>
+</tbody>
+</table>
+
+<p>对于linux，要使这个设置达到预期效果，对于绑定的顺序的有要求的，即在设置了SO_REUSEADDR，须先进行特定绑定，后进行通配绑定，后者才能成功；如果先进行通配绑定，后面的绑定（端口相同情况下）地址只要和通配绑定中的一个相同都将失败。</p>
+
+<p><strong>2、改变了系统对处于TIME_WAIT状态的socket的看待方式</strong>，要理解这个句话，首先先简单介绍以下什么是处于TIME_WAIT状态的socket？</p>
+
+<blockquote>
+<p>socket通常都有发送缓冲区，当调用send()函数成功后，只是将数据放到了缓冲区，并不意味着所有数据真正被发送出去。对于TCP socket，在加入缓冲区和真正被发送之间的时延会相当长。这就导致当close一个TCP socket的时候，可能在发送缓冲区中保存着等待发送的数据。为了确保TCP的可靠传输，TCP的实现是close一个TCP socket时，如果它仍然有数据等待发送，那么该socket会进入TIME_WAIT状态。这种状态将持续到数据被全部发送或者发生超时（这个超时时间通常被称为Linger Time，大多数系统默认为2分钟）。</p>
+</blockquote>
+
+<p>在未设置SO_REUSEADDR时，内核将一个处于TIME_WAIT状态的socketA仍然看成是一个绑定了指定ip和port的有效socket，因此此时如果另外一个socketB试图绑定相同的ip和port都将失败（不满足规则3），直到socketA被真正释放后，才能够绑定成功。如果socketB设置SO_REUSEADDR（仅仅只需要socketB进行设置），这种情况下socketB的绑定调用将成功返回，但真正生效需要在socketA被真正释放后。（这个地方的理解可能有点问题，待后续验证一下）。总结一下：<strong>内核在处理一个设置了SO_REUSEADDR的socket绑定时，如果其绑定的ip和port和一个处于TIME_WAIT状态的socket冲突时，内核将忽略这种冲突，即改变了系统对处于TIME_WAIT状态的socket的看待方式。</strong></p>
+
+<h3 id="getsockname-getpeername">getsockname,getpeername</h3>
+
+<p>原型</p>
+
+<pre><code class="language-c">int getsockname(int sockfg,struct sockaddr *localaddr,socklen_t *addrlen);
+int getpeername(int sockfg,struct sockaddr *peeraddr,socklen_t *addrlen);
+</code></pre>
+
+<p>这两个函数主要是获得内核自动分配的端口号与IP号。</p>
+
+<h3 id="dup">dup</h3>
+
+<p>都可以用来复制一个现有的文件描述符</p>
+
+<pre><code class="language-C">#include&lt;unistd.h&gt;
+int dup(int fd);
+int dup2(int fd,int fd2);
+</code></pre>
+
+<p>若成功，放回新的文件描述符；出错 -1；</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/thinyhttpd/">Thinyhttpd</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix_note_1/" data-tooltip="UNIX_NOTE_1">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 lzk_baggk. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix_note_1/" data-tooltip="UNIX_NOTE_1">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="http://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">lzk_baggk</h4>
+    
+      <div id="about-card-bio">想去的地方很远</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/os_node_1/">
+                <h3 class="media-heading">OS_NODE_1</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/redis_note_1/">
+                <h3 class="media-heading">Redis_note_1</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>​   redis入门。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/unix_note_1/">
+                <h3 class="media-heading">UNIX_NOTE_1</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>用来记录自己学习UNIX认为的重点，以及感悟。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/tinyhttp/">
+                <h3 class="media-heading">tinyHttp</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         4 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://www.baggk.xin/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="http://www.baggk.xin/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/tinyhttp\/';
+          
+            this.page.identifier = '\/2019\/05\/tinyhttp\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
