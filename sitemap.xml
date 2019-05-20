@@ -3,93 +3,93 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>hhtp://www.baggk.xin/tags/os/</loc>
+    <loc>http://www.baggk.xin/tags/os/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/2019/05/os_node_1/</loc>
+    <loc>http://www.baggk.xin/2019/05/os_node_1/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/post/</loc>
-    <lastmod>2019-05-19T12:47:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>hhtp://www.baggk.xin/tags/</loc>
+    <loc>http://www.baggk.xin/post/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/</loc>
+    <loc>http://www.baggk.xin/tags/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/categories/</loc>
+    <loc>http://www.baggk.xin/</loc>
+    <lastmod>2019-05-19T12:47:14+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.baggk.xin/categories/</loc>
     <lastmod>2019-05-17T20:24:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/2019/05/redis_note_1/</loc>
+    <loc>http://www.baggk.xin/2019/05/redis_note_1/</loc>
     <lastmod>2019-05-17T20:24:21+08:00</lastmod>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/categories/category/</loc>
-    <lastmod>2019-05-17T20:24:21+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>hhtp://www.baggk.xin/categories/subcategory/</loc>
+    <loc>http://www.baggk.xin/categories/category/</loc>
     <lastmod>2019-05-17T20:24:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/tags/tag1/</loc>
+    <loc>http://www.baggk.xin/categories/subcategory/</loc>
     <lastmod>2019-05-17T20:24:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/tags/tag2/</loc>
+    <loc>http://www.baggk.xin/tags/tag1/</loc>
     <lastmod>2019-05-17T20:24:21+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/tags/unix/</loc>
+    <loc>http://www.baggk.xin/tags/tag2/</loc>
+    <lastmod>2019-05-17T20:24:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.baggk.xin/tags/unix/</loc>
     <lastmod>2019-05-16T19:51:49+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/2019/05/unix_note_1/</loc>
+    <loc>http://www.baggk.xin/2019/05/unix_note_1/</loc>
     <lastmod>2019-05-16T19:51:49+08:00</lastmod>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/tags/thinyhttpd/</loc>
+    <loc>http://www.baggk.xin/tags/thinyhttpd/</loc>
     <lastmod>2019-05-15T18:41:25+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/2019/05/tinyhttp/</loc>
+    <loc>http://www.baggk.xin/2019/05/tinyhttp/</loc>
     <lastmod>2019-05-15T18:41:25+08:00</lastmod>
   </url>
   
   <url>
-    <loc>hhtp://www.baggk.xin/archives/</loc>
+    <loc>http://www.baggk.xin/archives/</loc>
     <priority>0</priority>
   </url>
   

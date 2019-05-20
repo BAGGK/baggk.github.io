@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on lzk&#39;s blog</title>
-    <link>hhtp://www.baggk.xin/tags/</link>
+    <link>http://www.baggk.xin/tags/</link>
     <description>Recent content in Tags on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 19 May 2019 12:47:14 +0800</lastBuildDate>
     
-	<atom:link href="hhtp://www.baggk.xin/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://www.baggk.xin/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>OS</title>
-      <link>hhtp://www.baggk.xin/tags/os/</link>
+      <link>http://www.baggk.xin/tags/os/</link>
       <pubDate>Sun, 19 May 2019 12:47:14 +0800</pubDate>
       
-      <guid>hhtp://www.baggk.xin/tags/os/</guid>
+      <guid>http://www.baggk.xin/tags/os/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tag1</title>
-      <link>hhtp://www.baggk.xin/tags/tag1/</link>
+      <link>http://www.baggk.xin/tags/tag1/</link>
       <pubDate>Fri, 17 May 2019 20:24:21 +0800</pubDate>
       
-      <guid>hhtp://www.baggk.xin/tags/tag1/</guid>
+      <guid>http://www.baggk.xin/tags/tag1/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tag2</title>
-      <link>hhtp://www.baggk.xin/tags/tag2/</link>
+      <link>http://www.baggk.xin/tags/tag2/</link>
       <pubDate>Fri, 17 May 2019 20:24:21 +0800</pubDate>
       
-      <guid>hhtp://www.baggk.xin/tags/tag2/</guid>
+      <guid>http://www.baggk.xin/tags/tag2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>UNIX</title>
-      <link>hhtp://www.baggk.xin/tags/unix/</link>
+      <link>http://www.baggk.xin/tags/unix/</link>
       <pubDate>Thu, 16 May 2019 19:51:49 +0800</pubDate>
       
-      <guid>hhtp://www.baggk.xin/tags/unix/</guid>
+      <guid>http://www.baggk.xin/tags/unix/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Thinyhttpd</title>
-      <link>hhtp://www.baggk.xin/tags/thinyhttpd/</link>
+      <link>http://www.baggk.xin/tags/thinyhttpd/</link>
       <pubDate>Wed, 15 May 2019 18:41:25 +0800</pubDate>
       
-      <guid>hhtp://www.baggk.xin/tags/thinyhttpd/</guid>
+      <guid>http://www.baggk.xin/tags/thinyhttpd/</guid>
       <description></description>
     </item>
     
