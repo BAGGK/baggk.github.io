@@ -6,18 +6,18 @@
     <description>Recent content in tag1 on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 May 2019 20:24:21 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 May 2019 12:08:30 +0800</lastBuildDate>
     
 	<atom:link href="http://www.baggk.xin/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Redis_note_1</title>
-      <link>http://www.baggk.xin/2019/05/redis_note_1/</link>
-      <pubDate>Fri, 17 May 2019 20:24:21 +0800</pubDate>
+      <title>Redis_source</title>
+      <link>http://www.baggk.xin/2019/05/redis_source/</link>
+      <pubDate>Thu, 23 May 2019 12:08:30 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/redis_note_1/</guid>
-      <description>&lt;p&gt;​   redis入门。&lt;/p&gt;</description>
+      <guid>http://www.baggk.xin/2019/05/redis_source/</guid>
+      <description></description>
     </item>
     
   </channel>

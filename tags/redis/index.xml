@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redis on lzk&#39;s blog</title>
+    <link>http://www.baggk.xin/tags/redis/</link>
+    <description>Recent content in redis on lzk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 May 2019 21:56:26 +0800</lastBuildDate>
+    
+	<atom:link href="http://www.baggk.xin/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Redis_use</title>
+      <link>http://www.baggk.xin/2019/05/redis_use/</link>
+      <pubDate>Tue, 21 May 2019 21:56:26 +0800</pubDate>
+      
+      <guid>http://www.baggk.xin/2019/05/redis_use/</guid>
+      <description>&lt;p&gt;​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -8,31 +8,31 @@
 <meta name="generator" content="Hugo 0.55.5 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="lzk_baggk">
 <meta name="keywords" content="">
-<meta name="description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
+<meta name="description" content="​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。">
 
 
-<meta property="og:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
+<meta property="og:description" content="​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UNIX_NOTE_1">
-<meta name="twitter:title" content="UNIX_NOTE_1">
-<meta property="og:url" content="http://www.baggk.xin/2019/05/unix_note_1/">
-<meta property="twitter:url" content="http://www.baggk.xin/2019/05/unix_note_1/">
+<meta property="og:title" content="Redis_use">
+<meta name="twitter:title" content="Redis_use">
+<meta property="og:url" content="http://www.baggk.xin/2019/05/redis_use/">
+<meta property="twitter:url" content="http://www.baggk.xin/2019/05/redis_use/">
 <meta property="og:site_name" content="lzk&#39;s blog">
-<meta property="og:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
-<meta name="twitter:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
+<meta property="og:description" content="​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。">
+<meta name="twitter:description" content="​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2019-05-16T19:51:49">
+    <meta property="article:published_time" content="2019-05-21T21:56:26">
   
   
-    <meta property="article:modified_time" content="2019-05-16T19:51:49">
+    <meta property="article:modified_time" content="2019-05-21T21:56:26">
   
   
   
   
     
-      <meta property="article:tag" content="UNIX">
+      <meta property="article:tag" content="redis">
     
   
 
@@ -53,14 +53,14 @@
   <meta property="twitter:image" content="http://www.baggk.xin/images/lzk_weixing.jpg">
 
 
-    <title>UNIX_NOTE_1</title>
+    <title>Redis_use</title>
 
     <link rel="icon" href="http://www.baggk.xin/favicon.png">
     
 
     
 
-    <link rel="canonical" href="http://www.baggk.xin/2019/05/unix_note_1/">
+    <link rel="canonical" href="http://www.baggk.xin/2019/05/redis_use/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -210,15 +210,15 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      UNIX_NOTE_1
+      Redis_use
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2019-05-16T19:51:49&#43;08:00">
+      <time itemprop="datePublished" datetime="2019-05-21T21:56:26&#43;08:00">
         
-  五月 16, 2019
+  五月 21, 2019
 
       </time>
     
@@ -229,236 +229,590 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>用来记录自己学习UNIX认为的重点，以及感悟。</p>
+              <p>​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。</p>
 
-<pre><code class="language-c">（long）getpid();
+<h3 id="redis安装">Redis安装</h3>
+
+<p>我是在阿里云的centos7上面进行部署的。</p>
+
+<pre><code>yum update
+yum install redis
 </code></pre>
 
-<h1 id="第3章-文件io">第3章 文件IO</h1>
+<p>​       redis服务器默认会使用6379端口，可以通过&ndash;port参数来自定义端口。通过redis-server来启动服务器，不过可以最好是配置redis-server默认是后台运行。这样就可以直接通过redis-cli来直接使用了。关闭是redis-cli SHUTDOWN。</p>
 
-<h4 id="幻数-magic-number">幻数  magic number</h4>
+<h3 id="redis简介">Redis简介</h3>
 
-<p>​   第一次听到这个概念，感觉是类似于协议这样的东西。一些约定俗成的东西。比如文件描述符的0，1，2在UNIX家族的操作系统的中，就是代表标准输入、标准输入、标准错误。可读性更强应该是：<code>STDIN_FILENO、STDOUT_FILENO、STDREE_FILENO。</code></p>
-
-<h4 id="函数open和openat">函数open和openat</h4>
-
-<p>​   都放回最小的未使用的描述符数值，一般与文件描述符有关函数都是这样，比如socket。不过可以通过due与due2来改变，主要改变这个是为了实现输入输出的重定义。</p>
-
-<pre><code class="language-c">#include &lt;fcntl.h&gt;
-int open(const char *path,int oflag,...);
-int openat(int fd,const char *path,int oflag,..);
-</code></pre>
-
-<p>lzk_baggk</p>
+<p>​       Redis是Remote Dictionary Server（远程<strong>字典</strong>服务器）的缩写。允许TCP协议读写字典中的内容。到目前支持的<strong>键值</strong>类型为：</p>
 
 <blockquote>
-<p>​     open和openat主要的区别是openat的path是相对地址，而open是绝对地址。fg参数指出了相对路径名的开始地址。</p>
-
-<p>​     openat主要解决的问题是让线程可以使用相对路径名来打开目录中的文件，而不是只能打开当前工作目录。还有就是解决time-of-check-to-time-of-use（TOCTTOU）。</p>
+<ol>
+<li>字符串类型</li>
+<li>散列类型</li>
+<li>列表类型</li>
+<li>集合类型</li>
+<li>有序集合类型</li>
+</ol>
 </blockquote>
 
-<h4 id="函数lseek">函数lseek</h4>
+<p>​       数据全部存储在<strong>内存</strong>中，由于内存的读写远快于硬盘，因此在性能上具体有明显的优势，不过这也存在程序退出的时候内存数据会丢失的问题。不过Redis也提供了持久化的支持，既可以将内存中的数据异步写入磁盘</p>
 
-<p>​       文件的读、写操作都是从当前文件偏移处开始的，在系统默认的情况下，除非是设置O_APPEND，否则就是被设置为0。lseek仅将偏移量记录到内核，并不引起任何的IO操作。</p>
+<h2 id="基础操作">基础操作</h2>
 
-<pre><code class="language-c">#include&lt;unistd.h&gt;
-off_t lseek(int fd, off_t offset,int whence);
+<p>​       就目前，我对redis理解来说。redis的操作主要是分为两个部分，一个是独立于数据类型的操作，一个是对通用的操作。虽然在命令上，并不是一直的，但是在逻辑上是一致的。虽然不知道为什么要这样设计。可能是为了避免数据的误操作吧。</p>
 
-若whence是SEEK_SET，就是从开始处开始。
-若whence是SEEK_CUR，就是从当前开始，可正可负
-若whence是SEEK_END，就是偏移量设置为文件长度加offset,可正可负。
-</code></pre>
-
-<h5 id="文件空洞">文件空洞</h5>
-
-<p>​       偏移量可以大于长度，当偏移量大于文件的长度的时候。下一次写时，会加长文件，没有被写的部分就会形成文件空洞。</p>
-
-<p>​       文件空洞不会占用磁盘的空间。只是在读取的时候被读作0。</p>
-
-<h4 id="函数read-write">函数read，write</h4>
-
-<pre><code class="language-c">#include&lt;unistd.h&gt;
-ssize_t read(int fd ,void *buf,size_t nbytes);
-</code></pre>
+<h4 id="脱离具体类型的操作">脱离具体类型的操作</h4>
 
 <ul>
-<li>普通文件，如果只有30字节，而要求是100字节，则read返回30，下一次读取是0.</li>
-<li>终端设备，通常一次是一行。</li>
+<li>KEYS pattern</li>
 </ul>
 
-<pre><code class="language-c">#include&lt;unistd.h&gt;
-ssize_t write(int fd ,void *buf,size_t nbytes);
-</code></pre>
-
-<p>​       如果在打开文件，指定了<code>O_APPEND</code>选项，则在每次写操作之前，将文件偏移量设置在文件的当前的结尾处。在一次成功之后，该文件偏移量增加实际写的字节数。而且是操作是原子性的。</p>
-
-<p>size_t 反映内存中对象的大小（以字节为单位）</p>
-
 <blockquote>
-<p>size_t的真实类型与操作系统有关，在32位架构中被普遍定义为：</p>
+<p>作用是获取符合规则的键名列表。pattern是支持glob风格通配符格式。</p>
 
-<p>typedef   unsigned int size_t;</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
 
-<p>而在64位架构中被定义为：</p>
+<tbody>
+<tr>
+<td>？</td>
+<td>匹配一个字符</td>
+</tr>
 
-<p>typedef  unsigned long size_t;</p>
+<tr>
+<td>*</td>
+<td>匹配任何一个（包括0个）字符</td>
+</tr>
+
+<tr>
+<td>[]</td>
+<td>匹配括号间的任一个字符，可以使用“-”符号表示一个范围，如a[b-d]可以匹配“ab”、“ac”和“ad”;</td>
+</tr>
+
+<tr>
+<td>\x</td>
+<td>匹配字符x，比如？就需要\?</td>
+</tr>
+</tbody>
+</table>
 </blockquote>
-
-<p>ssize_t 供返回字节计数或错误提示的函数使用。</p>
-
-<blockquote>
-<p>ssize_t是有符号整型，在32位机器上等同与int，在64位机器上等同与long int，有没有注意到，它和long数据类型有啥区别？其实就是一样的。size_t 就是无符号型的ssize_t，也就是unsigned long/ unsigned int (在32位下），不同的编译器或系统可能会有区别，主要是因为在32位机器上int和long是一样的。</p>
-
-<p>typedef  long  ssize_t;//ssize_t就是long类型</p>
-</blockquote>
-
-<p>lzk_baggk</p>
-
-<blockquote>
-<p>可以理解size_t是ssize_t的无符号版本吧。因为read有可能需要放回负数，所以使用了ssize_t;</p>
-</blockquote>
-
-<h4 id="文件共享">文件共享</h4>
-
-<p>​       UNIX支持共享文件，在这个之前需要了解I/O的数据结构。总的来说，使用三种数据结构表示打开文件。</p>
-
-<h5 id="有关数据结构">有关数据结构</h5>
 
 <ul>
-<li>每个进程在进程表（PCB？）中都有一个记录项，这个记录项包含一张打开的文件描述符表，指向一个文件表项。</li>
-<li>内核内所有打开的文件维持一张文件表。记录了偏移量，和v-node的地址。</li>
-<li>每个打开文件有个v-node。</li>
+<li>TYPE key</li>
 </ul>
 
-<p>lzk_baggk</p>
-
 <blockquote>
-<p>​     按照我的理解来说，当一个进程申请打开一个文件的时候，操作系统会在打开之后，记录到文件表中，里面记录v-node的信息，给文件是以什么样的方式打开的。之后，记录在对应进程的进程表里面。和文件描述符映射。</p>
-
-<p>​     当我们需要read的时候，我们通过文件描述符，就可以找到操心系统的文件表中对应的一项，通过这个我们可以得到i-node。有了i-node，我就可以得到知道具体在那一块了。</p>
+<p>TYPE 命令主要是获取键指的数据类型，可能是string | hash | list | set | zset。</p>
 </blockquote>
 
-<h4 id="函数dup和dup2">函数dup和dup2</h4>
+<h4 id="抽象操作">抽象操作</h4>
 
-<p>​       都可以用来复制一个现有的文件描述符。</p>
+<p>这里总结的可能有问题</p>
 
-<pre><code class="language-c">#include&lt;unistd.h&gt;
-int dup(int fd);
-int dup2(int fd,int fd2);
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>判断存在</th>
+<th>添加键</th>
+<th>删除键</th>
+<th>获取键值</th>
+<th>递增整数</th>
+<th>减少整数</th>
+</tr>
+</thead>
 
-<p>​       若成功，则放回新的文件描述符，如果错误，放回-1。在dup放回的文件描述符一定是最小的可用文件描述符。dup2则是可以指定，如果fd2存在，则先关闭。</p>
+<tbody>
+<tr>
+<td>字符串</td>
+<td>EXISTS</td>
+<td>SET</td>
+<td>DEL</td>
+<td>GET</td>
+<td>INCR</td>
+<td>DECR</td>
+</tr>
 
-<p>lzk_baggk</p>
+<tr>
+<td>散列</td>
+<td>HEXISTS</td>
+<td>HSET</td>
+<td>HDEL</td>
+<td>HGET</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
-<blockquote>
-<p>返回新的文件描述符，<strong>使得多个文件描述符指向同一个文件表</strong>。因为0，1，2默认是输入、输出、错误所以可以用来实现重定向。</p>
-</blockquote>
+<h3 id="字符串类型">字符串类型</h3>
 
-<pre><code class="language-c">int file = open('../../',O_APPEND);
-//将file定义为标准输出
-int error = dup2(file,STDOUT_NO);
-</code></pre>
+<p>​       字符串是Redis中最基础的数据类型，能存储任何形式的字符串。字符串也是其他4中数据类型的基础，其他的数据类型和字符串类型的差别从一定角度来说只是组织的形式不同。</p>
 
-<h4 id="函数sync-fsync-fdatasync">函数sync，fsync，fdatasync</h4>
-
-<p>​       顾名思义，就是同步、文件同步、文件数据同步的意思。简单来说，因为磁盘的效率比内存低了很多，所以在操作系统层次，为了优化会延迟磁盘的写入，这样可以将多个写操作合为一个写操作。但是有时候，我们需要保证数据的同步。</p>
-
-<pre><code class="language-c">#include &lt;unistd.h&gt;
-int     fsync(int fd);
-int     fdatasync(int fd);
-void    sync(void);
-</code></pre>
+<h5 id="赋值与取值">赋值与取值</h5>
 
 <ul>
-<li>sync函数将所有修改过的块缓存区排入写操作，然后放回。不等待实际写操作结束。</li>
-<li>fsync函数等待文件描述符fd描述的起作用。更新数据部分和文件属性。</li>
-<li>fdatasync函数只会更新数据。</li>
+<li>SET KEY value</li>
+<li>GET KEY</li>
 </ul>
 
-<h4 id="函数fcntl">函数fcntl</h4>
-
-<p>​       可以改变<strong>已经打开文件</strong>的属性</p>
-
-<pre><code class="language-c">#include &lt;fcntl.h&gt;
-int fcntl(int fd,int cmd,../int arg/);
-</code></pre>
+<h5 id="同时获取-设置多个键指">同时获取／设置多个键指</h5>
 
 <ul>
-<li>复制一个已有的描述符(cmd = F_DUPFD或者F_DUPFD_CLOEXEC)。</li>
-<li>获取/设置文件描述符标志(cmd = F_GETFD或 F_SETFD)。</li>
-<li>获取/设置文件状态标志(cmd = F_GETFL或 F_SETFL)。</li>
-<li>获取/设置异步I/O所有权（cmd = F_GETOWN 或 F_SETOWN)。</li>
-<li>获取/设置记录锁(cmd = F_GETLK 、F_SETLK 、F_SETLKW)。</li>
+<li>MGET key [key …]</li>
+<li>MSET key value [key value …]</li>
 </ul>
+
+<h5 id="递增与减少数字">递增与减少数字</h5>
+
+<ul>
+<li>INCR key</li>
+<li>INCRBY key increment</li>
+<li>DECR key</li>
+<li>DECRBY key decrement</li>
+<li>INCRBYFLOAT key increment</li>
+</ul>
+
+<h5 id="获取字符串长度">获取字符串长度</h5>
+
+<ul>
+<li><p>STRLEN key</p></li>
+
+<li></li>
+</ul>
+
+<h5 id="位操作">位操作</h5>
+
+<ul>
+<li>SETBIT key offset 0/1</li>
+</ul>
+
+<blockquote>
+<p>当offer大于长度的时候，中间会被填充为0</p>
+</blockquote>
+
+<ul>
+<li>GETBIT key offset</li>
+<li>BITCOUNT foo</li>
+</ul>
+
+<blockquote>
+<p>获取字符串类型键中是1的二进制个数。</p>
+</blockquote>
+
+<ul>
+<li>BITPOS</li>
+</ul>
+
+<h3 id="散列类型">散列类型</h3>
+
+<p>​       散列类型（hash）的键值也是一种字典结构，其存储了<strong>字段（field）和字段值的映射</strong>，但<strong>字段值只能是字符串</strong>，不支持其他数据类型，换句话说，散列类型不能嵌套其他的数据类型。</p>
+
+<p><img src="http://www.baggk.xin/images/redis_hash.png" alt="example" /></p>
+
+<h5 id="赋值与取值-1">赋值与取值</h5>
+
+<ul>
+<li>HSET key field value</li>
+<li>HSETNX key field value</li>
+</ul>
+
+<blockquote>
+<p>与HSET类似，但是只有字段不存在的时候赋值。</p>
+</blockquote>
+
+<ul>
+<li>HGET key field</li>
+<li>HGETALL</li>
+<li>HKEYS   key</li>
+</ul>
+
+<blockquote>
+<p>只获取字段名</p>
+</blockquote>
+
+<ul>
+<li>HVALS   key</li>
+</ul>
+
+<blockquote>
+<p>只获取字段值</p>
+</blockquote>
+
+<ul>
+<li>HLEN key</li>
+</ul>
+
+<blockquote>
+<p>获取字段（field）数量</p>
+</blockquote>
+
+<h5 id="同时获取-设置多个键指-1">同时获取／设置多个键指</h5>
+
+<ul>
+<li><p>HMSET key field value [field value …]</p></li>
+
+<li><p>HMGET key field [field …]</p></li>
+</ul>
+
+<h5 id="判断-字段-存在">判断<strong>字段</strong>存在</h5>
+
+<ul>
+<li>HEXISTS key field</li>
+</ul>
+
+<blockquote>
+<p>EXISTS，是用来判断键是不是存在的，而HEXISTS是用来判断HASH类型里面field是不是存在的。</p>
+</blockquote>
+
+<h5 id="递增与减少数字-1">递增与减少数字</h5>
+
+<ul>
+<li>HINCRBY key field increment</li>
+</ul>
+
+<h5 id="删除字段">删除字段</h5>
+
+<ul>
+<li>HDEL key field [field …]</li>
+</ul>
+
+<h3 id="列表类型">列表类型</h3>
+
+<p>​       列表类型（list）可以存储一个有序的字符串列表，常用的操作是向列表的两端添加元素，或者是获得列表的某一个片段。内部实现的使用双向链表(double linked list)实现的。借助这个特点，使得Redis可以作为队列使用。</p>
+
+<h5 id="向列表两端增加元素">向列表两端增加元素</h5>
+
+<ul>
+<li>LPUSH key value [value …]</li>
+<li>RPUSH key value [value …]</li>
+</ul>
+
+<h5 id="从列表两端弹出元素">从列表两端弹出元素</h5>
+
+<ul>
+<li><p>LPOP key</p></li>
+
+<li><p>RPOP key</p></li>
+</ul>
+
+<h5 id="获取列表中元素的个数">获取列表中元素的个数</h5>
+
+<ul>
+<li>LLEN key</li>
+</ul>
+
+<blockquote>
+<p>LLEN( list len )的时间复杂度为O(1)，使用时Redis会直接读取现成的值</p>
+</blockquote>
+
+<h5 id="获得列表片段">获得列表片段</h5>
+
+<ul>
+<li>LRANGE key start stop</li>
+</ul>
+
+<blockquote>
+<p>LRANGE( list range)命令也支持负索引，表示从右边开始计算序数，如&rdquo;−1&rdquo;表示最右边第一个元素，&rdquo;-2&rdquo;表示最右边第二个元素</p>
+
+<p>如果start的索引位置比stop的位置靠后，则会放回空列表。</p>
+
+<p>如果stop大于实际的索引范围，则会放回最右边的元素。</p>
+</blockquote>
+
+<h5 id="删除列表中指定的值">删除列表中指定的值</h5>
+
+<ul>
+<li>LREM key count value</li>
+</ul>
+
+<blockquote>
+<p>LREM(list remove)命令会删除列表中前count个值为value的元素，返回值是实际删除的元素个数。根据count值的不同，LREM命令的执行方式会略有差异。</p>
+
+<p>（1）当 count &gt; 0时 LREM 命令会从列表左边开始删除前 count 个值为 value的元素。</p>
+
+<p>（2）当 count &lt; 0时 LREM 命令会从列表右边开始删除前|count|个值为 value 的元素。</p>
+
+<p>（3）当 count = 0是 LREM命令会删除所有值为</p>
+</blockquote>
+
+<h5 id="获得-设置指定索引的元素值">获得/设置指定索引的元素值</h5>
+
+<ul>
+<li><p>LINDEX key index</p></li>
+
+<li><p>LSET key index value</p></li>
+</ul>
+
+<h5 id="只保留列表指定片段">只保留列表指定片段</h5>
+
+<ul>
+<li>LTRIM key start end</li>
+</ul>
+
+<blockquote>
+<p>LTRIM 命令可以删除指定索引范围之外的所有元素</p>
+</blockquote>
+
+<h5 id="向列表中插入元素">向列表中插入元素</h5>
+
+<ul>
+<li>LINSERT key BEFORE|AFTER pivot value</li>
+</ul>
+
+<blockquote>
+<p>LINSERT 命令首先会在列表中从左到右查找值为 pivot 的元素，然后根据第二个参数是BEFORE还是AFTER来决定将value插入到该元素的前面还是后面。</p>
+</blockquote>
 
 <p>lzk_baggk</p>
 
 <blockquote>
-<p>我们在使用fork的时候，后面很可能会接exec函数。这个时候，文件描述符会保留下来，但是其他的正文、数据、堆和栈会保留下来。我们就没有办法关掉没用的文件描述符。我们需要设置FD_CLOEXEC。</p>
+<p>在STL里面一般区间是[ ，)的，最后一个元素是一个end元素，所以只需要插入在元素的前面就可以了。但是redis的区间是[，]的。这样的话，就需要指定前后，不然第一个或者是最后一个就无法插入。</p>
 </blockquote>
 
-<pre><code class="language-c">int     fd = open(&quot;foo.txt&quot;,O_RDONLY);
-int     flags = fcntl(fd,F_GETFD);
-flags |= FD_CLOEXEC;
-tcntl(fd,F_SETFD,flags);
-</code></pre>
-
-<h4 id="函数ioctl">函数ioctl</h4>
-
-<pre><code class="language-C">#include &lt;unistd.h&gt;
-#include &lt;sys/ioctl.h&gt;
-int     ioctl(int fd,int request,s...);
-</code></pre>
-
-<h1 id="第4章-文件和目录">第4章 文件和目录</h1>
-
-<h1 id="第十四章">第十四章</h1>
-
-<h3 id="多路io复用转换">多路IO复用转换</h3>
-
-<p>​   select，poll，epoll工作在内核层面上。</p>
-
-<p>lzk_baggk</p>
-
-<blockquote>
-<p>​ 为了实现并发服务器，一般都是需要使用线程或者是进程的，但是如果线程或者是进程一多，每个线程获得的时间片就会变少。从而效率下降的非常快。</p>
-
-<p>​ 思考一下为什么要使用多线程和多进程来实现并发。一个原因是因为，IO的阻塞。一旦IO阻塞了，如read（），则服务器就必须要等到客户端的信息。就不能实现并发。</p>
-
-<p>​ 多路IO复用逻辑上server与client中间了一层，这一层就是select，select实际上是在操作系统的内核。在服务器端接受到数据的时候，内核就可以判断是给那个描述符的。从而唤醒select（文件描述符就绪），select去通知server去read数据，这个时候，server的read就一定不会阻塞了。从而解决了两难的问题。</p>
-
-<p>​ <strong>可以这样理解，就是一个单线程模型的服务器，只是这个时候的read不是被特定的客户端唤醒，而是会被所有的客户端唤醒</strong></p>
-</blockquote>
-
-<p>select能监听的文件描述符个数受限与FD_SETSIZE，一般是1024个。</p>
-
-<p>原型</p>
-
-<pre><code class="language-c">int select(int maxfdp1,
-           fd_set         * restrict readfds,
-           fd_set         * restrict writefds,
-           fd_set         *restrict exceptfds,
-           struct timeval *restrict tvptr);
-</code></pre>
-
-<p>第一个参数是最大文件描述符+1，告诉内核扫描的范围。</p>
-
-<p>二三四个参数是传入传出参数。传入是告诉内核，那些文件描述符需要监听。传出是告诉服务器那些文件描述符可以被处理。</p>
-
-<p>最后一个参数，是等待时间。</p>
+<h5 id="将元素从一个列表转到另一个列表">将元素从一个列表转到另一个列表</h5>
 
 <ul>
-<li>NULL，永远等下去</li>
-<li>设置timeval，等待固定时间</li>
-<li>设置timeval为0，检查后，马上放回，轮询。</li>
+<li>RPOPLPUSH source destination</li>
 </ul>
 
-<pre><code class="language-c">struct timeval{
-        long        tv_sec;         /*seconds*/
-        long        tc_usec;        /*microseconds*/
-};
-</code></pre>
+<blockquote>
+<p>先执行RPOP命令再执行LPUSH命令。RPOPLPUSH命令会先从source列表类型键的右边弹出一个元素，然后将其加入到destination列表类型键的左边，并返回这个元素的值，整个过程是原子的</p>
+</blockquote>
+
+<h3 id="集合类型">集合类型</h3>
+
+<h5 id="增加-删除元素">增加/删除元素</h5>
+
+<ul>
+<li><p>SADD key member [member …]</p></li>
+
+<li><p>SREM key member [member …]</p></li>
+</ul>
+
+<h5 id="获得集合中的所有元素">获得集合中的所有元素</h5>
+
+<ul>
+<li><p>SMEMBERS key</p></li>
+
+<li><p>SISMEMBERS key member</p></li>
+</ul>
+
+<blockquote>
+<p>判断一个元素是否在集合中是一个时间复杂度为O(1)的操作，无论集合中有多少个元素</p>
+</blockquote>
+
+<h5 id="集合间运算">集合间运算</h5>
+
+<ul>
+<li>SDIFF key [key „]</li>
+<li>SDIFFSTORE destination key [key …]</li>
+</ul>
+
+<blockquote>
+<p>差集</p>
+</blockquote>
+
+<ul>
+<li>SINTER key [key „]</li>
+<li>SINTERSTORE destination key [key …]</li>
+</ul>
+
+<blockquote>
+<p>交集</p>
+</blockquote>
+
+<ul>
+<li>SUNION key [key „]</li>
+<li>SUNIONSTORE destination key [key …]</li>
+</ul>
+
+<blockquote>
+<p>并集</p>
+</blockquote>
+
+<h5 id="获取集合中元素的个数">获取集合中元素的个数</h5>
+
+<ul>
+<li>SCARD key</li>
+</ul>
+
+<blockquote>
+<p>1）当count为正数时，SRANDMEMBER会随机从集合里获得count个不重复的元素。如果count的值大于集合中的元素个数，则SRANDMEMBER会返回集合中的全部元素。</p>
+
+<p>（2）当count为负数时，SRANDMEMBER会随机从集合里获得|count|个的元素，这些元素有可能相同。</p>
+</blockquote>
+
+<h5 id="随机获得集合中的元素">随机获得集合中的元素</h5>
+
+<ul>
+<li>SRANDMEMBER key [count]</li>
+</ul>
+
+<h5 id="从集合中弹出一个元素">从集合中弹出一个元素</h5>
+
+<ul>
+<li>SPOP key</li>
+</ul>
+
+<h3 id="有序-sorted-set-集合">有序（sorted set）集合</h3>
+
+<blockquote>
+<p>在实现上，使用的是散列表和跳表实现的，所以即使读取位于中间部分的数据速度也比较快。</p>
+</blockquote>
+
+<h5 id="增加元素">增加元素</h5>
+
+<ul>
+<li>ZADD key score member [score member …]</li>
+</ul>
+
+<h5 id="获得元素的分数">获得元素的分数</h5>
+
+<ul>
+<li>ZSCORE key member</li>
+</ul>
+
+<h5 id="获得排名在某个范围的元素列表">获得排名在某个范围的元素列表</h5>
+
+<ul>
+<li><p>ZRANGE key start stop [WITHSCORES]</p></li>
+
+<li><p>ZREVRANGE key start stop [WITHSCORES]</p></li>
+</ul>
+
+<blockquote>
+<p>ZRANGE命令的时间复杂度为O(log n+m)（其中n为有序集合的基数，m为返回的元素个数）如果两个元素的分数相同，Redis会按照字典顺序（即&rdquo;0&rdquo;&lt;&ldquo;9&rdquo;&lt;&ldquo;A&rdquo;&lt;&ldquo;Z&rdquo;&lt;&ldquo;a&rdquo;&lt;&ldquo;z&rdquo;这样的顺序）</p>
+</blockquote>
+
+<h5 id="获得指定分数范围的元素">获得指定分数范围的元素</h5>
+
+<ul>
+<li>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</li>
+</ul>
+
+<h5 id="获得集合中元素的数量">获得集合中元素的数量</h5>
+
+<ul>
+<li>ZCARD key</li>
+</ul>
+
+<h5 id="获得指定分数范围内的元素个数">获得指定分数范围内的元素个数</h5>
+
+<ul>
+<li>ZCOUNT key min max</li>
+</ul>
+
+<h5 id="删除一个或多个元素">删除一个或多个元素</h5>
+
+<ul>
+<li><p>ZREM key member [member …]</p></li>
+
+<li><p>ZREMRANGEBYRANK key start stop</p></li>
+</ul>
+
+<blockquote>
+<p>按照排名范围删除元素</p>
+</blockquote>
+
+<ul>
+<li>ZREMRANGEBYSCORE key min max</li>
+</ul>
+
+<blockquote>
+<p>按照分数范围删除元素</p>
+</blockquote>
+
+<h5 id="获得元素的排名">获得元素的排名</h5>
+
+<ul>
+<li><p>ZRANK key member</p></li>
+
+<li><p>ZREVRANK key member</p></li>
+</ul>
+
+<h5 id="计算有序集合的交集">计算有序集合的交集</h5>
+
+<p>ZINTERSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATESUM|MIN|MAX]</p>
+
+<h2 id="事务">事务</h2>
+
+<p>​       Redis保证一个事务中的所有命令要么都执行，要么都不执行。如果在发送EXEC命令前客户端断线了，则 Redis 会清空事务队列，事务中的所有命令都不会执行。而一旦客户端发送了EXEC命令，所有的命令就都会被执行，即使此后客户端断线也没关系，因为Redis中已经记录了所有要执行的命令。</p>
+
+<blockquote>
+<p>redis&gt; MULTI</p>
+
+<p>OK</p>
+
+<p>redis&gt; SADD &ldquo;user:1:following&rdquo; 2</p>
+
+<p>QUEUED</p>
+
+<p>redis&gt; SADD &ldquo;user:2:followers&rdquo; 1</p>
+
+<p>QUEUED</p>
+
+<p>redis&gt; EXEC</p>
+
+<p>1) (integer) 1</p>
+
+<p>2) (integer) 1</p>
+</blockquote>
+
+<h5 id="watch">WATCH</h5>
+
+<p>WATCH 命令可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行。监控一直持续到EXEC命令。</p>
+
+<blockquote>
+<p>redis&gt; SET key 1</p>
+
+<p>OK</p>
+
+<p>redis&gt; WATCH key</p>
+
+<p>OK</p>
+
+<p>redis&gt; SET key 2</p>
+
+<p>OK</p>
+
+<p>redis&gt; MULTI</p>
+
+<p>OK</p>
+
+<p>redis&gt; SET key 3</p>
+
+<p>QUEUED</p>
+
+<p>redis&gt; EXEC</p>
+
+<p>(nil)</p>
+
+<p>redis&gt; GET key</p>
+
+<p>&ldquo;2&rdquo;</p>
+</blockquote>
+
+<p>​       由于WATCH命令的作用只是当被监控的键值被修改后阻止之后一个事务的执行，而不能保证其他客户端不修改这一键值，所以我们需要在EXEC执行失败后重新执行整个函数。</p>
+
+<p>执行 EXEC 命令后会取消对所有键的监控，如果不想执行事务中的命令也可以使用UNWATCH命令来取消监控。</p>
+
+<h2 id="过期">过期</h2>
+
+<p>​       而在Redis中可以使用 EXPIRE命令设置一个键的过期时间，到时间后Redis会自动删除它。</p>
+
+<ul>
+<li><p>EXPIRE key seconds</p></li>
+
+<li><p>PERSIST key</p></li>
+
+<li><p>TTL</p></li>
+</ul>
               
             </div>
           </div>
@@ -470,7 +824,7 @@ int     ioctl(int fd,int request,s...);
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/unix/">UNIX</a>
+  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/redis/">redis</a>
 
                   </div>
                 
@@ -483,7 +837,7 @@ int     ioctl(int fd,int request,s...);
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/os_node_1/" data-tooltip="OS_NODE_1">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_source/" data-tooltip="Redis_source">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -491,7 +845,7 @@ int     ioctl(int fd,int request,s...);
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/tinyhttp/" data-tooltip="tinyHttp">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/os_node_1/" data-tooltip="OS_NODE_1">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -551,7 +905,7 @@ int     ioctl(int fd,int request,s...);
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/os_node_1/" data-tooltip="OS_NODE_1">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_source/" data-tooltip="Redis_source">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -559,7 +913,7 @@ int     ioctl(int fd,int request,s...);
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/tinyhttp/" data-tooltip="tinyHttp">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/os_node_1/" data-tooltip="OS_NODE_1">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -800,9 +1154,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/unix_note_1\/';
+          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/redis_use\/';
           
-            this.page.identifier = '\/2019\/05\/unix_note_1\/'
+            this.page.identifier = '\/2019\/05\/redis_use\/'
           
         };
         (function() {
