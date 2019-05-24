@@ -8,18 +8,18 @@
 <meta name="generator" content="Hugo 0.55.5 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="lzk_baggk">
 <meta name="keywords" content="">
-<meta name="description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta name="description" content="最近在看TinyHttp的源码。记录了一些，比较模糊的概念。">
 
 
-<meta property="og:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta property="og:description" content="最近在看TinyHttp的源码。记录了一些，比较模糊的概念。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tinyHttp">
 <meta name="twitter:title" content="tinyHttp">
 <meta property="og:url" content="http://www.baggk.xin/2019/05/tinyhttp/">
 <meta property="twitter:url" content="http://www.baggk.xin/2019/05/tinyhttp/">
 <meta property="og:site_name" content="lzk&#39;s blog">
-<meta property="og:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
-<meta name="twitter:description" content="最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。">
+<meta property="og:description" content="最近在看TinyHttp的源码。记录了一些，比较模糊的概念。">
+<meta name="twitter:description" content="最近在看TinyHttp的源码。记录了一些，比较模糊的概念。">
 <meta property="og:locale" content="zh-cn">
 
   
@@ -229,7 +229,7 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。</p>
+              <p>最近在看TinyHttp的源码。记录了一些，比较模糊的概念。</p>
 
 <h3 id="intptr-t">intptr_t</h3>
 
@@ -250,7 +250,7 @@ typedef int         intptr_t;
 typedef unsigned int        uintptr_t;
 </code></pre>
 
-<p>应该是为了提高平台的可移植性。比如在64位的操作系统中，在指针的大小是8字节，但是4字节。</p>
+<p>应该是为了提高平台的可移植性。比如在64位的操作系统中，在指针的大小是8字节，但是在32位操作系统为4字节。</p>
 
 <pre><code class="language-c">//C code , arg 是 void * 
 int clinet = (intptr_t) arg；
@@ -288,8 +288,6 @@ int clinet = (intptr_t) arg；
 };
 </code></pre>
 
-<p>stat可以最主要的</p>
-
 <h3 id="tcp粘包问题">TCP粘包问题</h3>
 
 <p>来自 <a href="https://blog.csdn.net/asklw/article/details/79244386">asklw</a></p>
@@ -307,7 +305,7 @@ int clinet = (intptr_t) arg；
 <p>来自 lzk_baggk</p>
 
 <blockquote>
-<p>在TCP有流水线之后，本来应该是发送方不停的发送数据，来提高信道的使用率。但是可能是因为实际上这可能并不是很终于，而且大量的小报文会减低有用信息在实际传输过程中的比例，因为需要为每个小报文都加一个TCP头。所以就有了Nagle算法。具体是因为什么。我还没有完全的想清楚。所以这里先暂时记录一下自己的想法</p>
+<p>在TCP有流水线之后，本来应该是发送方不停的发送数据，来提高信道的使用率。但是发送端可能并没有这多的数据，而且大量的小报文会减低有用信息在实际传输过程中的比例，因为需要为每个小报文都加一个TCP头。所以就有了Nagle算法。具体是因为什么。我还没有完全的想清楚。所以这里先暂时记录一下自己的想法</p>
 </blockquote>
 
 <h3 id="大小端与网络字节序">大小端与网络字节序</h3>
@@ -517,7 +515,7 @@ int dup2(int fd,int fd2);
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix_note_1/" data-tooltip="UNIX_NOTE_1">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/" data-tooltip="UNIX环境高级编程">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -585,7 +583,7 @@ int dup2(int fd,int fd2);
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix_note_1/" data-tooltip="UNIX_NOTE_1">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/" data-tooltip="UNIX环境高级编程">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -724,8 +722,8 @@ int dup2(int fd,int fd2);
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/os_node_1/">
-                <h3 class="media-heading">OS_NODE_1</h3>
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                <h3 class="media-heading">现代操作系统</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
@@ -741,8 +739,8 @@ int dup2(int fd,int fd2);
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/unix_note_1/">
-                <h3 class="media-heading">UNIX_NOTE_1</h3>
+              <a class="link-unstyled" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">
+                <h3 class="media-heading">UNIX环境高级编程</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
@@ -766,7 +764,7 @@ int dup2(int fd,int fd2);
                   May 5, 2019
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。</p></div>
+              <div class="media-content hide-xs font-merryweather"><p>最近在看TinyHttp的源码。记录了一些，比较模糊的概念。</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>

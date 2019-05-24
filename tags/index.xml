@@ -12,27 +12,9 @@
     
     
     <item>
-      <title>tag1</title>
-      <link>http://www.baggk.xin/tags/tag1/</link>
-      <pubDate>Thu, 23 May 2019 12:08:30 +0800</pubDate>
-      
-      <guid>http://www.baggk.xin/tags/tag1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tag2</title>
-      <link>http://www.baggk.xin/tags/tag2/</link>
-      <pubDate>Thu, 23 May 2019 12:08:30 +0800</pubDate>
-      
-      <guid>http://www.baggk.xin/tags/tag2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>redis</title>
       <link>http://www.baggk.xin/tags/redis/</link>
-      <pubDate>Tue, 21 May 2019 21:56:26 +0800</pubDate>
+      <pubDate>Thu, 23 May 2019 12:08:30 +0800</pubDate>
       
       <guid>http://www.baggk.xin/tags/redis/</guid>
       <description></description>

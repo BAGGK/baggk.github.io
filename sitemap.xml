@@ -3,12 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://www.baggk.xin/categories/</loc>
-    <lastmod>2019-05-23T12:08:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.baggk.xin/post/</loc>
     <lastmod>2019-05-23T12:08:30+08:00</lastmod>
     <priority>0</priority>
@@ -26,31 +20,13 @@
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/categories/category/</loc>
-    <lastmod>2019-05-23T12:08:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.baggk.xin/</loc>
     <lastmod>2019-05-23T12:08:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/categories/subcategory/</loc>
-    <lastmod>2019-05-23T12:08:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.baggk.xin/tags/tag1/</loc>
-    <lastmod>2019-05-23T12:08:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.baggk.xin/tags/tag2/</loc>
+    <loc>http://www.baggk.xin/tags/redis/</loc>
     <lastmod>2019-05-23T12:08:30+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -61,19 +37,13 @@
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/tags/redis/</loc>
-    <lastmod>2019-05-21T21:56:26+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://www.baggk.xin/tags/os/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/2019/05/os_node_1/</loc>
+    <loc>http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2019-05-19T12:47:14+08:00</lastmod>
   </url>
   
@@ -84,7 +54,7 @@
   </url>
   
   <url>
-    <loc>http://www.baggk.xin/2019/05/unix_note_1/</loc>
+    <loc>http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2019-05-16T19:51:49+08:00</lastmod>
   </url>
   
@@ -101,6 +71,11 @@
   
   <url>
     <loc>http://www.baggk.xin/archives/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.baggk.xin/categories/</loc>
     <priority>0</priority>
   </url>
   

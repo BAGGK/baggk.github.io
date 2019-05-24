@@ -8,31 +8,31 @@
 <meta name="generator" content="Hugo 0.55.5 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="lzk_baggk">
 <meta name="keywords" content="">
-<meta name="description" content="">
+<meta name="description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
 
 
-<meta property="og:description" content="">
+<meta property="og:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis_source">
-<meta name="twitter:title" content="Redis_source">
-<meta property="og:url" content="http://www.baggk.xin/2019/05/redis_source/">
-<meta property="twitter:url" content="http://www.baggk.xin/2019/05/redis_source/">
+<meta property="og:title" content="UNIX环境高级编程">
+<meta name="twitter:title" content="UNIX环境高级编程">
+<meta property="og:url" content="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">
+<meta property="twitter:url" content="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">
 <meta property="og:site_name" content="lzk&#39;s blog">
-<meta property="og:description" content="">
-<meta name="twitter:description" content="">
+<meta property="og:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
+<meta name="twitter:description" content="用来记录自己学习UNIX认为的重点，以及感悟。">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2019-05-23T12:08:30">
+    <meta property="article:published_time" content="2019-05-16T19:51:49">
   
   
-    <meta property="article:modified_time" content="2019-05-23T12:08:30">
+    <meta property="article:modified_time" content="2019-05-16T19:51:49">
   
   
   
   
     
-      <meta property="article:tag" content="redis">
+      <meta property="article:tag" content="UNIX">
     
   
 
@@ -53,14 +53,14 @@
   <meta property="twitter:image" content="http://www.baggk.xin/images/lzk_weixing.jpg">
 
 
-    <title>Redis_source</title>
+    <title>UNIX环境高级编程</title>
 
     <link rel="icon" href="http://www.baggk.xin/favicon.png">
     
 
     
 
-    <link rel="canonical" href="http://www.baggk.xin/2019/05/redis_source/">
+    <link rel="canonical" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -210,15 +210,15 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Redis_source
+      UNIX环境高级编程
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2019-05-23T12:08:30&#43;08:00">
+      <time itemprop="datePublished" datetime="2019-05-16T19:51:49&#43;08:00">
         
-  五月 23, 2019
+  五月 16, 2019
 
       </time>
     
@@ -229,7 +229,299 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
+              <p>用来记录自己学习UNIX认为的重点，以及感悟。</p>
+
+<p>获取进程ID</p>
+
+<pre><code class="language-c">（long）getpid();
+</code></pre>
+
+<h1 id="第3章-文件io">第3章 文件IO</h1>
+
+<h4 id="幻数-magic-number">幻数  magic number</h4>
+
+<p>​   第一次听到这个概念，感觉是类似于协议这样的东西。一些约定俗成的东西。比如文件描述符的0，1，2在UNIX家族的操作系统的中，就是代表标准输入、标准输入、标准错误。可读性更强应该是：<code>STDIN_FILENO、STDOUT_FILENO、STDREE_FILENO。</code></p>
+
+<h4 id="函数open和openat">函数open和openat</h4>
+
+<p>​   都返回最小的未使用的描述符数值，一般与文件描述符有关函数都是这样，比如socket。不过可以通过due与due2来改变，这个常用来实现输入输出的重定义。</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+int open(const char *path,int oflag,...);
+int openat(int fd,const char *path,int oflag,..);
+</code></pre>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>​     open和openat主要的区别是openat的path是相对地址，而open是绝对地址。fg参数指出了相对路径名的开始地址。</p>
+
+<p>​     openat主要解决的问题是让线程可以使用相对路径名来打开目录中的文件，而不是只能打开当前工作目录。还有就是解决time-of-check-to-time-of-use（TOCTTOU）。</p>
+</blockquote>
+
+<h4 id="函数lseek">函数lseek</h4>
+
+<p>​       文件的读、写操作都是从当前文件偏移处开始的，在系统默认的情况下，除非是设置O_APPEND，否则就是被设置为0。lseek仅将偏移量记录到内核，并不引起任何的IO操作。</p>
+
+<pre><code class="language-c">#include&lt;unistd.h&gt;
+off_t lseek(int fd, off_t offset,int whence);
+
+若whence是SEEK_SET，就是从开始处开始。
+若whence是SEEK_CUR，就是从当前开始，可正可负
+若whence是SEEK_END，就是偏移量设置为文件长度加offset,可正可负。
+</code></pre>
+
+<h5 id="文件空洞">文件空洞</h5>
+
+<p>​       偏移量可以大于长度，当偏移量大于文件的长度的时候。下一次写时，会加长文件，没有被写的部分就会形成文件空洞。</p>
+
+<p>​       文件空洞不会占用磁盘的空间。只是在读取的时候被读作0。</p>
+
+<h4 id="函数read-write">函数read，write</h4>
+
+<pre><code class="language-c">#include&lt;unistd.h&gt;
+ssize_t read(int fd ,void *buf,size_t nbytes);
+</code></pre>
+
+<ul>
+<li>普通文件，如果只有30字节，而要求是100字节，则read返回30，下一次读取是0.</li>
+<li>终端设备，通常一次是一行。</li>
+</ul>
+
+<pre><code class="language-c">#include&lt;unistd.h&gt;
+ssize_t write(int fd ,void *buf,size_t nbytes);
+</code></pre>
+
+<p>​       如果在打开文件，指定了<code>O_APPEND</code>选项，则在每次写操作之前，将文件偏移量设置在文件的当前的结尾处。在一次成功之后，该文件偏移量增加实际写的字节数。而且是操作是原子性的。</p>
+
+<p>size_t 反映内存中对象的大小（以字节为单位）</p>
+
+<blockquote>
+<p>size_t的真实类型与操作系统有关，在32位架构中被普遍定义为：</p>
+
+<p>typedef   unsigned int size_t;</p>
+
+<p>而在64位架构中被定义为：</p>
+
+<p>typedef  unsigned long size_t;</p>
+</blockquote>
+
+<p>ssize_t 供返回字节计数或错误提示的函数使用。</p>
+
+<blockquote>
+<p>ssize_t是有符号整型，在32位机器上等同与int，在64位机器上等同与long int，有没有注意到，它和long数据类型有啥区别？其实就是一样的。size_t 就是无符号型的ssize_t，也就是unsigned long/ unsigned int (在32位下），不同的编译器或系统可能会有区别，主要是因为在32位机器上int和long是一样的。</p>
+
+<p>typedef  long  ssize_t;//ssize_t就是long类型</p>
+</blockquote>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>可以理解size_t是ssize_t的无符号版本吧。因为read有可能需要放回负数，所以使用了ssize_t;</p>
+</blockquote>
+
+<h4 id="文件共享">文件共享</h4>
+
+<p>​       UNIX支持共享文件，在这个之前需要了解I/O的数据结构。总的来说，使用三种数据结构表示打开文件。</p>
+
+<h5 id="有关数据结构">有关数据结构</h5>
+
+<ul>
+<li>每个进程在进程表（PCB？）中都有一个记录项，这个记录项包含一张打开的文件描述符表，指向一个文件表项。</li>
+<li>内核内所有打开的文件维持一张文件表。记录了偏移量，和v-node的地址。</li>
+<li>每个打开文件有个v-node。</li>
+</ul>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>​     按照我的理解来说，当一个进程申请打开一个文件的时候，操作系统会在打开之后，记录到文件表中，里面记录v-node的信息，给文件是以什么样的方式打开的。之后，记录在对应进程的进程表里面。和文件描述符映射。</p>
+
+<p>​     当我们需要read的时候，我们通过文件描述符，就可以找到操心系统的文件表中对应的一项，通过这个我们可以得到i-node。有了i-node，我就可以得到知道具体在那一块了。</p>
+</blockquote>
+
+<h4 id="函数dup和dup2">函数dup和dup2</h4>
+
+<p>​       都可以用来复制一个现有的文件描述符。</p>
+
+<pre><code class="language-c">#include&lt;unistd.h&gt;
+int dup(int fd);
+int dup2(int fd,int fd2);
+</code></pre>
+
+<p>​       若成功，则放回新的文件描述符，如果错误，放回-1。在dup放回的文件描述符一定是最小的可用文件描述符。dup2则是可以指定，如果fd2存在，则先关闭。</p>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>返回新的文件描述符，<strong>使得多个文件描述符指向同一个文件表</strong>。因为0，1，2默认是输入、输出、错误所以可以用来实现重定向。</p>
+</blockquote>
+
+<pre><code class="language-c">int file = open('../../',O_APPEND);
+//将file定义为标准输出
+int error = dup2(file,STDOUT_NO);
+</code></pre>
+
+<h4 id="函数sync-fsync-fdatasync">函数sync，fsync，fdatasync</h4>
+
+<p>​       顾名思义，就是同步、文件同步、文件数据同步的意思。简单来说，因为磁盘的效率比内存低了很多，所以在操作系统层次，为了优化会延迟磁盘的写入，这样可以将多个写操作合为一个写操作。但是有时候，我们需要保证数据的同步。</p>
+
+<pre><code class="language-c">#include &lt;unistd.h&gt;
+int     fsync(int fd);
+int     fdatasync(int fd);
+void    sync(void);
+</code></pre>
+
+<ul>
+<li>sync函数将所有修改过的块缓存区排入写操作，然后放回。不等待实际写操作结束。</li>
+<li>fsync函数等待文件描述符fd描述的起作用。更新数据部分和文件属性。</li>
+<li>fdatasync函数只会更新数据。</li>
+</ul>
+
+<h4 id="函数fcntl">函数fcntl</h4>
+
+<p>​       可以改变<strong>已经打开文件</strong>的属性</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+int fcntl(int fd,int cmd,../int arg/);
+</code></pre>
+
+<ul>
+<li>复制一个已有的描述符(cmd = F_DUPFD或者F_DUPFD_CLOEXEC)。</li>
+<li>获取/设置文件描述符标志(cmd = F_GETFD或 F_SETFD)。</li>
+<li>获取/设置文件状态标志(cmd = F_GETFL或 F_SETFL)。</li>
+<li>获取/设置异步I/O所有权（cmd = F_GETOWN 或 F_SETOWN)。</li>
+<li>获取/设置记录锁(cmd = F_GETLK 、F_SETLK 、F_SETLKW)。</li>
+</ul>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>我们在使用fork的时候，后面很可能会接exec函数。这个时候，文件描述符会保留下来，但是其他的正文、数据、堆和栈会保留下来。我们就没有办法关掉没用的文件描述符。我们需要设置FD_CLOEXEC。</p>
+
+<p>记录锁，详细看第14章</p>
+</blockquote>
+
+<pre><code class="language-c">int     fd = open(&quot;foo.txt&quot;,O_RDONLY);
+int     flags = fcntl(fd,F_GETFD);
+flags |= FD_CLOEXEC;
+tcntl(fd,F_SETFD,flags);
+</code></pre>
+
+<h4 id="函数ioctl">函数ioctl</h4>
+
+<pre><code class="language-C">#include &lt;unistd.h&gt;
+#include &lt;sys/ioctl.h&gt;
+int     ioctl(int fd,int request,s...);
+</code></pre>
+
+<h1 id="第4章-文件和目录">第4章 文件和目录</h1>
+
+<h1 id="第14章高级i-o">第14章高级I/O</h1>
+
+<h3 id="记录锁">记录锁</h3>
+
+<p>​       当第一个进程正在读或者修改文件的时候，使用记录锁可以阻止其他进程修改同一文件区。更准确的名字叫字节范围锁（bity-range locking）。早期只支持函数flock，对整个文件加锁。慢慢的可以通过函数fcntl来实现对部分加锁，函数lockf是fcntl这个功能的接口封装。</p>
+
+<pre><code class="language-c">struct flock{
+  short l_type;     /*F_RDLCK,F_WRLCK,or F_UNICK*/
+  short l_whence;   // SEEK_SET,SEEK_CUR ,or SEEK_END
+  off_t l_start;;
+  off_t l_len;
+  pid_t l_pid;
+};
+//这个结构体和上面说明整个文件加锁的函数flock同名
+</code></pre>
+
+<h5 id="读锁-写锁">读锁，写锁</h5>
+
+<p>​       F_RDLCK读锁，F_WRLCK是写锁。加读锁的文件必须是读打开，加写锁的文件必须是写打开。如果一个文件加了读锁，其他进程可以加读锁，但是不能加写锁。加了写锁之后，读锁与写锁都不能加了。</p>
+
+<h5 id="fcntl实现记录锁">fcntl实现记录锁</h5>
+
+<pre><code class="language-C">#include&lt;fcntl.h&gt;
+int fcntl(int fd,int cmd,...);
+</code></pre>
+
+<p>​       对于记录锁，cmd是F_GETLK、F_SETLK或F_SETLKW。第三个参数是struct flock * flockptr。</p>
+
+<blockquote>
+<p>F_GETLK判断flockptr所表述的锁是否会被另外一把锁排斥。如果存在，他阻止创建。</p>
+
+<p>F_SETLK设置描述的锁。如果被系统阻止，立即阻止。</p>
+
+<p>F_SETLKW设置描述的锁。如果被系统阻止，被进程休眠，一直到允许。</p>
+</blockquote>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>一般来说，会用F_GETLK来测试，然后用F_SETLK来设置。但是这两者并不是一个原子操作。所以存在这样的情况，在F_GETLK之后，是没有写锁的，这个时候切换到另外一个进程，之后加了写锁。导致出错。所以处理F_SETLK出错是必须的。</p>
+</blockquote>
+
+<p>​       在设置或释放文件上的一把锁时，系统按要求组合或者是分裂相邻区。</p>
+
+<h5 id="锁的隐含继承和释放">锁的隐含继承和释放</h5>
+
+<ul>
+<li>锁与进程和文件两者相关联
+
+<ul>
+<li>当进程终止时，建立的锁释放掉</li>
+<li>描述符关闭时，通过该进程的锁会释放掉</li>
+</ul></li>
+<li>fork产生的子进程不继承父进程的锁</li>
+</ul>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+</blockquote>
+
+<h3 id="多路io复用转换">多路IO复用转换</h3>
+
+<p>​   select，poll，epoll工作在内核层面上。</p>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>​ 为了实现并发服务器，一般都是需要使用线程或者是进程的，但是如果线程或者是进程一多，每个线程获得的时间片就会变少。从而效率下降的非常快。</p>
+
+<p>​ 思考一下为什么要使用多线程和多进程来实现并发。一个原因是因为，IO的阻塞。一旦IO阻塞了，如read（），则服务器就必须要等到客户端的信息。就不能实现并发。</p>
+
+<p>​ 多路IO复用逻辑上server与client中间了一层，这一层就是select，select实际上是在操作系统的内核。在服务器端接受到数据的时候，内核就可以判断是给那个描述符的。从而唤醒select（文件描述符就绪），select去通知server去read数据，这个时候，server的read就一定不会阻塞了。从而解决了两难的问题。</p>
+
+<p>​ <strong>可以这样理解，就是一个单线程模型的服务器，只是这个时候的read不是被特定的客户端唤醒，而是会被所有的客户端唤醒</strong></p>
+</blockquote>
+
+<p>select能监听的文件描述符个数受限与FD_SETSIZE，一般是1024个。</p>
+
+<p>原型</p>
+
+<pre><code class="language-c">int select(int maxfdp1,
+           fd_set         * restrict readfds,
+           fd_set         * restrict writefds,
+           fd_set         *restrict exceptfds,
+           struct timeval *restrict tvptr);
+</code></pre>
+
+<p>第一个参数是最大文件描述符+1，告诉内核扫描的范围。</p>
+
+<p>二三四个参数是传入传出参数。传入是告诉内核，那些文件描述符需要监听。传出是告诉服务器那些文件描述符可以被处理。</p>
+
+<p>最后一个参数，是等待时间。</p>
+
+<ul>
+<li>NULL，永远等下去</li>
+<li>设置timeval，等待固定时间</li>
+<li>设置timeval为0，检查后，马上放回，轮询。</li>
+</ul>
+
+<pre><code class="language-c">struct timeval{
+        long        tv_sec;         /*seconds*/
+        long        tc_usec;        /*microseconds*/
+};
+</code></pre>
               
             </div>
           </div>
@@ -241,7 +533,7 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/redis/">redis</a>
+  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/unix/">UNIX</a>
 
                   </div>
                 
@@ -254,7 +546,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-tooltip="现代操作系统">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -262,7 +554,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/tinyhttp/" data-tooltip="tinyHttp">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -322,7 +614,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" data-tooltip="现代操作系统">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -330,7 +622,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/tinyhttp/" data-tooltip="tinyHttp">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -571,9 +863,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/redis_source\/';
+          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B\/';
           
-            this.page.identifier = '\/2019\/05\/redis_source\/'
+            this.page.identifier = '\/2019\/05\/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B\/'
           
         };
         (function() {

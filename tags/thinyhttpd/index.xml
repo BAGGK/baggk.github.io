@@ -17,7 +17,7 @@
       <pubDate>Wed, 15 May 2019 18:41:25 +0800</pubDate>
       
       <guid>http://www.baggk.xin/2019/05/tinyhttp/</guid>
-      <description>&lt;p&gt;最近在看TinyHttp的源码，一个只有500多行的C语言小型web服务器的。作为自己服务器开发入门的小项目吧。记录了一些，比较模糊的概念。&lt;/p&gt;</description>
+      <description>&lt;p&gt;最近在看TinyHttp的源码。记录了一些，比较模糊的概念。&lt;/p&gt;</description>
     </item>
     
   </channel>

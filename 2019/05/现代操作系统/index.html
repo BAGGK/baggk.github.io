@@ -13,26 +13,26 @@
 
 <meta property="og:description" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis_source">
-<meta name="twitter:title" content="Redis_source">
-<meta property="og:url" content="http://www.baggk.xin/2019/05/redis_source/">
-<meta property="twitter:url" content="http://www.baggk.xin/2019/05/redis_source/">
+<meta property="og:title" content="现代操作系统">
+<meta name="twitter:title" content="现代操作系统">
+<meta property="og:url" content="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+<meta property="twitter:url" content="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
 <meta property="og:site_name" content="lzk&#39;s blog">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2019-05-23T12:08:30">
+    <meta property="article:published_time" content="2019-05-19T12:47:14">
   
   
-    <meta property="article:modified_time" content="2019-05-23T12:08:30">
+    <meta property="article:modified_time" content="2019-05-19T12:47:14">
   
   
   
   
     
-      <meta property="article:tag" content="redis">
+      <meta property="article:tag" content="OS">
     
   
 
@@ -53,14 +53,14 @@
   <meta property="twitter:image" content="http://www.baggk.xin/images/lzk_weixing.jpg">
 
 
-    <title>Redis_source</title>
+    <title>现代操作系统</title>
 
     <link rel="icon" href="http://www.baggk.xin/favicon.png">
     
 
     
 
-    <link rel="canonical" href="http://www.baggk.xin/2019/05/redis_source/">
+    <link rel="canonical" href="http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -210,15 +210,15 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Redis_source
+      现代操作系统
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2019-05-23T12:08:30&#43;08:00">
+      <time itemprop="datePublished" datetime="2019-05-19T12:47:14&#43;08:00">
         
-  五月 23, 2019
+  五月 19, 2019
 
       </time>
     
@@ -229,7 +229,58 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
+              <h2 id="第4章-文件系统">第4章 文件系统</h2>
+
+<ul>
+<li>文件是磁盘（存储介质）的抽象。可以把理解文件是看成是一个地址空间</li>
+<li>UNIX和windows的文件都是无结构的字节序列</li>
+<li>seek来实现随机访问</li>
+<li>FCB</li>
+</ul>
+
+<h4 id="软链接与硬链接">软链接与硬链接</h4>
+
+<ul>
+<li>硬链接是在指定的地方也生成了一个i-node，同时会吧i-node内部的计数器+1，两个i-node同时指向一个真实的文件。</li>
+<li>软连接是在里面存入真实一个地址，系统通过这个地址来找到这个文件。当真实文件不存在的时候，软链接也可以使用。可以跨硬盘甚至是主机。不过效率会低一些，毕竟要一次地址转换。</li>
+</ul>
+
+<h4 id="文件系统的实现">文件系统的实现</h4>
+
+<p><img src="http://www.baggk.xin/images/fSsturt.jpg" alt="文件系统" /></p>
+
+<ul>
+<li>BITMAP</li>
+<li>链表分配</li>
+<li>文件分配表（FAT）</li>
+<li>i节点</li>
+</ul>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>​     虽然各种的都有优缺点，但是总体来说，从上到下是逐步优化的过程。bitmap是一个顺序分配的方案，算法简单、读性能比较好，单个操作就可以把这个文件读出来。但是也存在比较明显的问题，随着时间的推移，磁盘会变得很零碎。</p>
+
+<p>​     链表分配，是对BITMAP的一种优化，将顺序的改成链表形式的，但是这样随机访问就变得非常缓慢，同时文件内容不再是2的幂次方，会减低程序性能。</p>
+
+<p>​     文件分配表（FAT），是链表分配的一种优化，将指针放在内容里面。可以解决链表的不足，但是同时也是因为需要放在内存里面，占用了太多的内容。</p>
+
+<p>​     i-node思路上，和文件分配表有相似的地方，不过他主要当文件打开的时候，i-node才在内存里面。</p>
+</blockquote>
+
+<p>#### 目录的实现</p>
+
+<p>​       在过去会把文件的属性，放在目录项里面，但是对于i-node实现的系统来说，其实在目录下其实只需要文件名与i节点号就可以了。这样可以提高内存的使用率。</p>
+
+<h4 id="磁盘空间管理">磁盘空间管理</h4>
+
+<p>​       几乎所有的文件系统，都是把文件分割成<strong>固定大小</strong>的块来储存，各块之间不一定相邻。</p>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>​     所以在读取一个磁盘的时候，读取一个字节和读取一块字节的时间差不多。这也是B数的工作原理。</p>
+</blockquote>
               
             </div>
           </div>
@@ -241,7 +292,7 @@
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/redis/">redis</a>
+  <a class="tag tag--primary tag--small" href="http://www.baggk.xin/tags/os/">OS</a>
 
                   </div>
                 
@@ -254,7 +305,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -262,7 +313,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/" data-tooltip="UNIX环境高级编程">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -322,7 +373,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -330,7 +381,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/redis_use/" data-tooltip="Redis_use">
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/" data-tooltip="UNIX环境高级编程">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -571,9 +622,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/redis_source\/';
+          this.page.url = 'http:\/\/www.baggk.xin\/2019\/05\/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/';
           
-            this.page.identifier = '\/2019\/05\/redis_source\/'
+            this.page.identifier = '\/2019\/05\/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F\/'
           
         };
         (function() {
