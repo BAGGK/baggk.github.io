@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>UNIX on lzk&#39;s blog</title>
-    <link>http://www.baggk.xin/tags/unix/</link>
+    <link>https://www.baggk.xin/tags/unix/</link>
     <description>Recent content in UNIX on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 16 May 2019 19:51:49 +0800</lastBuildDate>
     
-	<atom:link href="http://www.baggk.xin/tags/unix/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.baggk.xin/tags/unix/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>UNIX环境高级编程</title>
-      <link>http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</link>
+      <link>https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Thu, 16 May 2019 19:51:49 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</guid>
       <description>&lt;p&gt;用来记录自己学习UNIX认为的重点，以及感悟。&lt;/p&gt;</description>
     </item>
     

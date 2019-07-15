@@ -2,57 +2,75 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>lzk&#39;s blog</title>
-    <link>http://www.baggk.xin/</link>
+    <link>https://www.baggk.xin/</link>
     <description>Recent content on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 May 2019 12:08:30 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Jun 2019 19:27:02 +0800</lastBuildDate>
     
-	<atom:link href="http://www.baggk.xin/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.baggk.xin/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>RB_tree</title>
+      <link>https://www.baggk.xin/2019/06/rb_tree/</link>
+      <pubDate>Mon, 17 Jun 2019 19:27:02 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/2019/06/rb_tree/</guid>
+      <description>&lt;p&gt;​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于&lt;strong&gt;平衡&lt;/strong&gt;的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Stl</title>
+      <link>https://www.baggk.xin/2019/05/stl/</link>
+      <pubDate>Mon, 27 May 2019 15:21:15 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/2019/05/stl/</guid>
+      <description>&lt;p&gt;​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为&lt;strong&gt;侯捷老师&lt;/strong&gt;的&lt;strong&gt;C++STL体系结构与内核分析&lt;/strong&gt;的学习视频。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Redis_source</title>
-      <link>http://www.baggk.xin/2019/05/redis_source/</link>
+      <link>https://www.baggk.xin/2019/05/redis_source/</link>
       <pubDate>Thu, 23 May 2019 12:08:30 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/redis_source/</guid>
+      <guid>https://www.baggk.xin/2019/05/redis_source/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Redis_use</title>
-      <link>http://www.baggk.xin/2019/05/redis_use/</link>
+      <link>https://www.baggk.xin/2019/05/redis_use/</link>
       <pubDate>Tue, 21 May 2019 21:56:26 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/redis_use/</guid>
+      <guid>https://www.baggk.xin/2019/05/redis_use/</guid>
       <description>&lt;p&gt;​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>现代操作系统</title>
-      <link>http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+      <title>OS_NOTE_1</title>
+      <link>https://www.baggk.xin/2019/05/os_note_1/</link>
       <pubDate>Sun, 19 May 2019 12:47:14 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <guid>https://www.baggk.xin/2019/05/os_note_1/</guid>
       <description></description>
     </item>
     
     <item>
       <title>UNIX环境高级编程</title>
-      <link>http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</link>
+      <link>https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Thu, 16 May 2019 19:51:49 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/</guid>
       <description>&lt;p&gt;用来记录自己学习UNIX认为的重点，以及感悟。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>tinyHttp</title>
-      <link>http://www.baggk.xin/2019/05/tinyhttp/</link>
+      <link>https://www.baggk.xin/2019/05/tinyhttp/</link>
       <pubDate>Wed, 15 May 2019 18:41:25 +0800</pubDate>
       
-      <guid>http://www.baggk.xin/2019/05/tinyhttp/</guid>
+      <guid>https://www.baggk.xin/2019/05/tinyhttp/</guid>
       <description>&lt;p&gt;最近在看TinyHttp的源码。记录了一些，比较模糊的概念。&lt;/p&gt;</description>
     </item>
     

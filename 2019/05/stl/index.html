@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.55.6 with theme Tranquilpeak 0.4.3-SNAPSHOT">
+<meta name="author" content="lzk_baggk">
+<meta name="keywords" content="">
+<meta name="description" content="​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为侯捷老师的C&#43;&#43;STL体系结构与内核分析的学习视频。">
+
+
+<meta property="og:description" content="​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为侯捷老师的C&#43;&#43;STL体系结构与内核分析的学习视频。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stl">
+<meta name="twitter:title" content="Stl">
+<meta property="og:url" content="https://www.baggk.xin/2019/05/stl/">
+<meta property="twitter:url" content="https://www.baggk.xin/2019/05/stl/">
+<meta property="og:site_name" content="lzk&#39;s blog">
+<meta property="og:description" content="​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为侯捷老师的C&#43;&#43;STL体系结构与内核分析的学习视频。">
+<meta name="twitter:description" content="​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为侯捷老师的C&#43;&#43;STL体系结构与内核分析的学习视频。">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2019-05-27T15:21:15">
+  
+  
+    <meta property="article:modified_time" content="2019-05-27T15:21:15">
+  
+  
+  
+  
+    
+      <meta property="article:tag" content="stl">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.baggk.xin/images/lzk_weixing.jpg">
+  <meta property="twitter:image" content="https://www.baggk.xin/images/lzk_weixing.jpg">
+
+
+    <title>Stl</title>
+
+    <link rel="icon" href="https://www.baggk.xin/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.baggk.xin/2019/05/stl/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.baggk.xin/css/style-nnm2spxvve8onlujjlegkkytaehyadd4ksxc1hyzzq9a2wvtrgbljqyulomn.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.baggk.xin/">lzk&#39;s blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.baggk.xin/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.baggk.xin/#about">
+          <img class="sidebar-profile-picture" src="https://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">lzk_baggk</h4>
+        
+          <h5 class="sidebar-profile-bio">想去的地方很远</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/BAGGK" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.baggk.xin/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Stl
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-05-27T15:21:15&#43;08:00">
+        
+  五月 27, 2019
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为<strong>侯捷老师</strong>的<strong>C++STL体系结构与内核分析</strong>的学习视频。</p>
+
+<p>测试方法</p>
+
+<pre><code class="language-c++">clock_t timeStart = clock();
+</code></pre>
+
+<h3 id="六大部件">六大部件</h3>
+
+<p><strong>容器 算法 分配器 适配器 迭代器 仿函数</strong></p>
+
+<pre><code class="language-c++">//一个使用了六大部件小程序
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+#include&lt;iostream&gt;
+
+using namespace std;
+int main(){
+    
+    int ia[ 6 ] = {7 ,210,12,47,109,83};
+    vector&lt;int ,allocator&lt;int&gt;&gt; vi(ia,ia+6);
+    
+    cout &lt;&lt; count_if(vi.begin(),vi.end(),not1(bind2nd(less&lt;int&gt;,40)));
+    
+    return 0;
+}
+</code></pre>
+
+<h3 id="容器的分类">容器的分类</h3>
+
+<ul>
+<li>序列式的容器 Sequent Containers</li>
+</ul>
+
+<blockquote>
+<p>Array  |  Vector | Deque | List | Forward-List</p>
+
+<p>List在实现上是个双向环状链表</p>
+
+<p>Vector是两倍增长</p>
+</blockquote>
+
+<ul>
+<li>关联式的容器 Associative Containers</li>
+</ul>
+
+<blockquote>
+<p>set | map | Multiset | Multimap</p>
+
+<p>在内部是红黑树实现的。set与map的key不可以重复。Multi-以为可以重复</p>
+
+<p>对于set来说value就是key</p>
+</blockquote>
+
+<ul>
+<li>不定顺的容器 Unordered Containers</li>
+</ul>
+
+<blockquote>
+<p>内部是hashtable。内部是使用Separate chaining</p>
+</blockquote>
+
+<h3 id="萃取器">萃取器</h3>
+
+<pre><code>
+template&lt;class I&gt;
+struct iterator_traits
+{
+    typedef typename I::itreator_category    iterator_category;
+    typedef typename I::value_type           valuetype;
+    typedef typename I::difference_type      difference_type;
+    typedef typename I::pointer              pointer;
+    typedef typename I::reference            reference;
+}
+</code></pre>
+
+<p>这里解释一下difference_type和iterator_category。</p>
+
+<p><strong>differece type用来表示两个迭代器之间的距离</strong>，也可以用来表示一个容器的最大容量，类型一般用内置的ptrdiff_t定义域cstddef，它存在的原因和size_t差不多，虽然底部可能是int或者是uint，不过为了可移植性，所以统一typedef为ptrdiff_t。</p>
+
+<p><strong>iterator_category是迭代器的类型</strong>，它的存在相当于告诉了编译器这个迭代器能做到什么功能。</p>
+
+<h6 id="具体的类型有五种">具体的类型有五种</h6>
+
+<ul>
+<li>input iterator 这种迭代器只能读，只能一个一个向前进</li>
+<li>output iterator 只能写，也只能一个一个前进</li>
+<li>forward iterator 可以读可以写，只能前进</li>
+<li>bidirectional iterator 可以读可以写，可以双向移动，不过一次还是只能移动一个单位</li>
+<li>random access iterator 可以读可以写，而且可以进行算数能力，例如+n，-n，&lt;,&gt;等操作</li>
+</ul>
+
+<h4 id="queue和stack-关于其iterator和底层结构">queue和stack，关于其iterator和底层结构</h4>
+
+<p>​       stack或queue都不允许遍历。在默认情况下，使用的deque的作为底层。可以认为queue和stack和是一种适配器。但是也可以使用list作为底层。
+stack可以使用vector做为底层结构。queue不可以，因为queue需要弹出前面的，vector不支持。stack的pop()函数需要调用pop_front()的。</p>
+
+<p>lzk_baggk</p>
+
+<blockquote>
+<p>模板在你不去的使用的使用，是不会检查的。比如你使用queue<int, vector<int>&gt;这个的时候，其中有个pop()是不能使用的。但是如果在你的程序里面没有使用这个函数，则编译是可以通过的。</p>
+</blockquote>
+
+<h4 id="rb-tree">RB-tree</h4>
+
+<p>Red-Black tree 是平衡二元搜索树(balanced binary search tree)中常被使用一种。</p>
+
+<p>key.   value 包含 { key 和 data }</p>
+
+<blockquote>
+<p>在红黑树的里面，会有一个header的元素。</p>
+</blockquote>
+
+<pre><code class="language-c++">template&lt;class Key,
+				class Value,
+				class KeyofValue,
+				class Compare,
+				class ALLoc = alloc &gt;
+eg:
+rb_tree&lt;int ,int ,identity&lt;int&gt;,less&lt;int&gt;,alloc&gt; myTree;
+//value include key and data
+//identity and less is class function. 
+
+public function:
+insert_unique();
+empty();
+size();
+insert_equal();
+count();
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk: handle and body。stl中，其实可以修改他的值。主要是rb_tree被设计为底层结构。在类似于map这样的容器当中，应该允许修改data的值。</p>
+</blockquote>
+
+<h3 id="set-multiset">set，multiset</h3>
+
+<p>​       set/multiset 以rb_tree为底层结构，因此有<strong>元素自动排序</strong>的特性。排序的依据是key，而set/multiset元素的value 和 key 合一。</p>
+
+<pre><code class="language-c++">template&lt; class Key , class Compare = less&lt;Key&gt;,class Alloc = alloc&gt;
+class set{
+public:
+		//typedefs
+		typedef key key_type;
+		typedef Key value_type;
+		typedef Compare key_compare;
+		typedef Compare value_compare;
+private:
+		typedef rb_tree&lt;key_type,value_type,identity&lt;value_type&gt;,key_compare,Alloc&gt; rep_type;
+		rep_type t;
+....
+public:
+		typedef typename rep_type::const_iterator iterator;//实现不能修改
+};
+
+use:
+set&lt;int&gt; iset;
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：在rb_tree中是可以用过迭代器修改内部元素的，但是set是不可以的。就是通过将 iterator 设置为const_iteraotr实现的。使用者通过set拿到的是rb_tree的const_iteraotr，不可以修改。set 的所有操作都是 rb_tree 实现的。从这个角度来说， set 是一种 container adapter。</p>
+</blockquote>
+
+<h3 id="容器-map-multimap">容器 map，multimap</h3>
+
+<p>​       同样是以 rb_tree 为底层结构，因此可以元素自动排序。无法使用 map/multimap 的 iteraotr 修改元素的key,但可以用它来改变元素的 data 。</p>
+
+<pre><code class="language-C++">template &lt;class Key ,class T , class Compare = less&lt;Key&gt;, class Alloc = alloc&gt;
+class map{
+public:
+	typedef Key key_type;
+	typedef T data_type;
+	typedef T mapped_type;
+	typedef pair&lt;const Key,T&gt; value_type;//实现将key设置为const来实现，key不可修改，但是data可以
+	typedef Compare key_compare;
+private:
+	typedef rb_tree&lt;key_type,value_type,select1st&lt;value_type&gt;,key_compare,Alloc&gt; rep_type;
+	rep_type t;
+public:
+	typedef typename rep_type::iterator iterator;
+};
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：在 map 中 value 是指 key 和 data 的结合，同时在 map 中将 key 设置为const。</p>
+</blockquote>
+
+<h5 id="注意-在-map-中可以使用operator-来实现插入-在-multimap-中不存在这样的操作">注意：在 map 中可以使用operator [] 来实现插入，在 multimap 中不存在这样的操作。</h5>
+
+<blockquote>
+<p>​     Allows for easy lookup with the subcript ( @c[] ) operator. Returns data associated with the key specified by subscript. <strong>If the key does not exist</strong> , a pair with that key is created using default values , which is then returned.</p>
+</blockquote>
+
+<h3 id="hashtable">hashTable</h3>
+
+<p>​       散列表或者哈希表。在 STL 一般使用拉链（ Separate Chaining ）。按照经验法则，<strong>当你的元素的个数比你的篮子（ bucket ）个数还要多，则认为需要打散（ rehashing ）</strong>，也就是篮子增加两倍（其实也不是两倍，而是两倍附近的素数）。</p>
+
+<pre><code class="language-c++">//只给出了一部分
+static const unsigned long __stl_prime_list[__stl_num_primes] = {
+  53,97,193,389,769,1543,3079,6151,12289,24593,49157,......,4294967291ul
+};
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：感觉在 reshasing 的时候，需要将所有的元素全部计算一遍，是很需要花费时间的操作。</p>
+</blockquote>
+
+<pre><code class="language-C++">//HashFcn 是指 object 转换为数值的方式，ExtractKey 则是怎么萃取出 key，类似于rb_tree的keyofvalue
+template &lt;class Value, class Key, class Hashfcn, class ExtractKey, class EqualKey,
+class Alloc = alloc&gt;
+
+class hashtable{
+public:
+	typedef HashFcn hasher;
+	typedef EqualKey key_equal;
+	typedef size_t	 size_type;
+private:
+	hasher hash;
+	key_equal equals;
+	ExtractKey get_key;
+	
+	typedef __hashtable_node&lt;Value&gt; node;
+	vector&lt;node*,Alloc&gt; buckets;
+	size_type num_elements;
+public:
+size_type num_elements;
+};
+</code></pre>
+
+<h3 id="unordered-set">unordered_set</h3>
+
+<p>​       类似于 set，但是底层是hashTable。所以有函数 bucket_count() 和函数 bucket_size(size_type __n) 前者是计算篮子总数，后者是某个篮子元素的个数。</p>
+
+<blockquote>
+<p>我使用了 mac xcode来编译呢。发现在使用 bucket_count 的时候并不是素数。可能是以为版本的不同吧。</p>
+</blockquote>
+
+<h2 id="算法">算法</h2>
+
+<p>​       算法（Algorithms）一般是 function template。同时在STL中的 algorithms 是看不到 containers，所以需要从 iterator 中取得，所以 iterator 必须得回答 algorithms 的问题。算法一般是处理容器的。</p>
+
+<pre><code class="language-c++">template&lt;typename Iterator&gt;
+Algorithm(Iteraotr itr1,iterator itr2){
+....
+}
+</code></pre>
+
+<h4 id="迭代器分类">迭代器分类</h4>
+
+<pre><code class="language-C++">//五种iterator category
+struct input_iterator_tag{};
+struct output_iterator_tag{};
+struct forward_iterator_tag:public input_iterator_tag{};
+struct bidirectional_iterator_tag:public forward_iterator_tag{};
+struct random_access_iterator_tag:public bidirectional_iterator_tag{};
+</code></pre>
+
+<blockquote>
+<p>在 template 中使用类似于 T::iterator_category 这样的代码，对于编译器来说会有歧义。即可能是一种类型，也可能是一个成员变量。所以c++规定一律按照成员变量来处理，在需要时类型的时候需要加上typename进行修饰。</p>
+</blockquote>
+
+<h5 id="accumulate-函数">accumulate 函数</h5>
+
+<pre><code class="language-C++">template &lt;class InputIterator,class T&gt;
+T accumulate(InputIterator first,InputIterator last,T init){
+  for(;first != last ; ++first)
+    init = init + * first;
+  return init;
+}
+template &lt;class InputIterator ,class T,class BinaryOperation&gt;
+T accumulate(InputIterator first,InputIterator last,T init ,BinaryOperation binary_op){
+		init = binary_op(init,*first);
+	return init;
+}
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：对于第二种模版只需要有 function call 就可以了，比如一个类重载()操作符，或者是一个函数。</p>
+</blockquote>
+
+<h5 id="for-each-函数">for_each 函数</h5>
+
+<pre><code class="language-C++">template&lt;class InputIterator,class Function&gt;
+Function for_each(InputIterator first , Inputiterator last,Function f)
+{
+    for(; first != last; ++first)
+      f(*first);
+  return f;
+}
+</code></pre>
+
+<blockquote>
+<p>在c++ 11之后，有一种新的语法可以替代这个，就是 range-based for statement 。也就是</p>
+
+<pre><code class="language-c++">&gt; for (decl : coll) {
+&gt;   statement;
+&gt; }
+&gt; ```
+
+##### replace , replace_if ,replace_copy 函数
+
+```c++
+template &lt;class ForwardIterator,class T&gt;
+void replace(ForwardIterator first,Forwarditerator last,const T&amp; old_value,const T&amp; new_value){
+  
+  //所有等于old_value 都用 new_value取代
+  for(;first != last;++first)
+    if( *first == old_value)
+	    *first = new_value;
+}
+
+template &lt;class ForwardIterator,class Predicate,class T&gt;
+void replace_if(ForwardIterator first,forwardIterator last,Predicate pred,const T&amp; value){
+  //所有满足pred()为true的元素都用 new_value 替代
+  for(;first != last; ++first)
+    if( pred(*first) )
+      *first = new_vlaue;
+}
+
+template &lt;class InputIterator,class OutputIterator,class T&gt;
+Outputiterator replace_copy(InputIterator first,Inputiterator last,OutputIterator result,const T&amp;old_value,const T&amp;new_value){
+  //	所有等于 old_value 的都以 new_value 放入新区间，如果不符合则放入新区间
+  for(; first != last; ++first,++result)
+    	*result = *first == old_value ? new_value:*first;
+  return result;
+}
+</code></pre>
+
+<p>这个给出了 stl 的命名习惯。_if 则是有条件的，_copy则是放入一个新的空间里面。</p>
+</blockquote>
+
+<h5 id="count-count-if-函数">count , count_if 函数</h5>
+
+<pre><code class="language-c++">template&lt;class InputIteraotr,class T&gt;
+typename iterator_trains&lt;Inputiterator&gt;::difference 
+count( InputIterator first , InputIterator last,const T&amp;value){
+	typename iterator_traits&lt;InputIterator&gt;::difference_type n = 0;
+	for(;first != last; ++first)
+		if(*first == value)
+			++n;
+}
+
+
+template&lt;classs InputIterator,clss Predicate&gt;
+typename iterator_traits&lt;InputIterator&gt;::difference_type count_if(InputIteraotr first,InputIterator last,Predicate pred){
+	typename iterator_traits&lt;InputIterator&gt;::difference_type n = 0;
+	for(;first!=last;++first)
+		if(pred(*first))
+			++n;
+	return n;
+}
+</code></pre>
+
+<blockquote>
+<p>不带count的容器有：array，vector，list，forward_list，deque</p>
+
+<p>带有count的容器有：set / multiset.  map / multimap. unordered_set / unordered_multiset. Unordered_map / unordered_multimap</p>
+
+<p>Lzk_baggk：自己带有 count 函数的容器应该使用自己的 count 。可以理解成“全局”的 count 是一个泛化的函数，而容器的版本是特化的版本。</p>
+
+<p>关联性容器，一般是绑定一起的。</p>
+</blockquote>
+
+<h5 id="find-find-if-函数">find , find_if 函数</h5>
+
+<pre><code class="language-C++">template&lt;class InputIterator,class T&gt;
+  InputIterator find(Inputiterator first,InputIterator last,const T&amp; value){
+  while(first!= last &amp;&amp; *first != value)
+    ++first
+   return first;
+}
+
+template&lt;class InputIterator ,class Predicate&gt;
+InputIterator find_if( InputIterator first,InputIterator last,Predicate pred)
+{
+	while( first != last &amp;&amp; pred(*first))
+    ++first;
+  return first;
+}
+</code></pre>
+
+<blockquote>
+<p>关联容器拥是有序的，所以有自己的特定版本，而其他的容器一般都没有。</p>
+
+<p>不要写出类似于下面的代码，find 函数本质上就是遍历操作。</p>
+
+<pre><code class="language-c++">&gt; vector&lt;int&gt; arrs = {...};
+&gt; sort(arrs.begin(),arrs.end());
+&gt; find(arrs.begin(),arrs.end(),target);
+&gt; ```
+&gt;
+
+binary_search 函数
+
+&gt; Test if vlaue exists in soeted sequence.
+
+```c++
+template&lt;class ForwarIterator, class T&gt;
+  bool binary_search(ForwardIterator first, ForwardIterator last,const T&amp; val){
+  	first = std::lower_bound(first,last,val);
+  return (first!=last &amp;&amp; !(val &lt; *first));
+}
+//不知道是不是我理解上的错误，觉得 binary_search 不应该是 ForwardIterator 因为，如果是如果是 list 这类容器，还不如直接的查找快一点呢。
+
+//lower_bound源码可以看到，这与我们平常写的二分法不太一样，主要是因为lower_bound需要保证找到的是第一个，所以就算他找到了也是继续进行下去，他的时间复杂度是严格的O(lg n)。
+template&lt;class ForwardIterator, class T&gt;
+  ForwardIterator lower_bound(ForwardIterator first,ForwardIterator last, const T&amp;val){
+  iterator_trains&lt;ForwardIterator&gt;::difference_type count,step;
+  ForwardIterator it;
+  count = distance(first,last);
+  while( count &gt; 0){
+    it = first;step = count/2;advance(it,step);
+    if( *it &lt; val ){
+      first = ++it;
+      count -= step +1;
+    }
+    else count = step;
+  }
+  return first;
+}
+</code></pre>
+
+<p>lzk_baggk：lower_bound 和 upper_bound 都是寻找插入点，lower_bound 是最低点，而upper_bound则是最高点，通过 *it 取值点时候，都是取下一个。所以upper_bound之后点迭代器指向点是下一个元素。10、10、10、20、20、20、30、30、30。如果是val = 20，则lower_bound取值为第一个20，而upper_bound是第一个30。</p>
+</blockquote>
+
+<h2 id="仿函数-functor">仿函数 Functor</h2>
+
+<p>​       functor 只为算法服务。functor 主要有三种，算术类、逻辑运算类、相对关系类。</p>
+
+<pre><code class="language-C++">template&lt;class T&gt;
+  struct plus:public binary_function(T,T,T){
+    T operator()(const T&amp;x,const T&amp;y) const
+    { return x+y;}
+  }；
+  
+template&lt;class T1,class T2&gt;
+  struct pair{
+  	typedef T1 first_type;
+  	typedef T2 second_type;
+  	
+  	T1 first;
+  	T2 second;
+  	pair() first(T1()),second(T2()){}
+  	pair(const T1&amp; a,const T2&amp; b):first(a),second(b){}
+  };
+template&lt;class T&gt;
+  struct greater:public binary_function&lt;T,T,bool&gt;{
+    bool operator()(const T&amp;x,const T&amp;y)const
+    { return x&gt;y;}
+  };
+
+template&lt;class T&gt;
+  struct less:public binary_function&lt;T,T,bool&gt;{
+    bool operator()(const T&amp; x,const T&amp; y)const
+    { return x&lt;Y;}
+  }
+
+//需要继承的东西
+template&lt;class Arg,class Result&gt;
+struct unary_function{//一元的
+	typedef Arg argument_type;
+	typedef Result result_type;
+};
+template&lt;class Arg1,class Arg2,class Result&gt;
+struct binary_function{//二元的
+	typedef Arg1 first_argument_type;
+	typedef Arg2 second_argument_type;
+	typedef Result result_type;
+};
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：如果你希望你的 functor 是可以适配的，则需要继承unary_function 或者是 binary_function 。</p>
+</blockquote>
+
+<h2 id="适配器-adapter">适配器 adapter</h2>
+
+<p>​       根据需要改造的东西不同，apapter分为三类，容器适配器（Container Adapters）、仿函数适配器（Functor Adapters）、迭代器适配器（Iterator Adapters）。在 STL 里面都是使用内含的方式实现的。</p>
+
+<h4 id="容器适配器-stack-queue">容器适配器 stack,queue</h4>
+
+<blockquote>
+<p>lzk_baggk：从一些角度来说，关联性容器都是 adapter ,因为他们内部就是使用红黑树与hashtable 使用的，就是调用了那些接口。</p>
+</blockquote>
+
+<h4 id="函数适配器-binder2nd">函数适配器 binder2nd</h4>
+
+<pre><code class="language-C++">template&lt;class Operation,class T&gt;
+  inline binder2nd&lt;Operator&gt; bind2nd(const Operation&amp;op,const T&amp; x){
+  	typedef typename Operation::second_argument_type arg2_type;
+   return binder2nd&lt;Operation&gt;(op,arg2_type(x));
+  //lzk_baggk : arg2_type(x)这里是个转换，如果不能则会编译出错，算是一种检查手段
+}
+
+template&lt;class Operation&gt;
+class binder2nd
+  :public unary_function&lt;typename Operation::first_argument_type,typename Operation::result _type&gt;{
+protected:
+   Operation op;
+   typename Operation::second_argument_type value;
+public:
+		binder2nd(const Operation&amp; x ,const typename Operation::second_argument_type&amp; y):op(x),value(y){};
+
+    typename Operation::result_type operator()(const typename Operation::first_argument_type &amp; x)const {
+      return op(x,value);
+    }
+};
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：因为binder2nd是一个类，所以他是不能自动的推导参数类型的，这样给使用者很不方便。所以就设计了bind2nd作为一个辅助模版函数。不过到了现在的版本基本使用c++11 bind来替代了。</p>
+</blockquote>
+
+<h4 id="bind-函数">bind 函数</h4>
+
+<p>​       可以绑定 functions 、function objects 、member function、date members。</p>
+
+<pre><code class="language-C++">// 感觉很奇怪的使用方式，代码来源于 cplusplus.com
+using namespace std::placeholders; //add visibility of _1,_2,_3
+
+//用于绑定的
+double my_divide(double x,double y)
+{ return x / y;}
+struct MyPair{
+  double a,b;
+  double multiply(){ return a * b;}
+};
+
+//binding functions:
+auto fn_five = bind(my_divide,10,2);
+
+auto fn_half = bind(my_divide,_1,2); 
+fn_half(10); //5
+
+auto fn_invert = bind(my_divide,_2,_1);
+fn_invert(10,2);//0.2
+
+//&lt;int&gt; 代表返回值为 int 类型 ，也就是 return int(x/y);
+auto fn_rounding = bind&lt;int&gt;(my_divide,_1,_2);
+fn_rounding(10,3); //3
+
+//binding members;
+MyPair ten_tow{10,2};
+auto bound_memfn = bind(&amp;MyPair::multiply,_1);
+bound_memfn(ten_two);
+
+auto bound_memdate = bind(&amp;MyPair::)
+</code></pre>
+
+<h4 id="迭代器适配器-iteraor-adapter">迭代器适配器 Iteraor Adapter</h4>
+
+<pre><code class="language-c++">reverse_iterator
+rbegin()
+{ return reverse_iterator(end());}
+rend()
+{ return reverse_iterator(begin());}
+
+template&lt;class Iterator&gt;
+class reverse_iterator
+{
+protected:
+  Iterator current;
+public:
+  typedef typename iterator_trains&lt;Iterator&gt;::iterator_category iterator-_category;
+  typedef typename iterator_trains&lt;Iterator&gt;::value_type value_type;
+  ...
+  typedef Iterator iterator_type;
+  typedef reverse_iterator&lt;Iterator&gt; self;
+public:
+  explicit reverse_iterator(iterator_type x):current(x){}
+  reverse_iterator(const self &amp; x):current(x.current){}
+  iterator_type base() const {return current;}//	取出对应的正向迭代器
+  reference operator *() const { Iterator tmp = current; return *--tmp;}
+  ....
+}；
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：reverse_iterator相对来说比较简单，这里说明一下 explicit 关键词吧。英语意义是明确的，不模糊的，在 C++ 里面是允许隐形转换的。但是在有些情况下，这可能会带来一些问题，使用 explicit 修饰点构造函数不允许隐形的被调用。</p>
+</blockquote>
+
+<pre><code class="language-C++">//explicit 的例子，有空会专门开一遍 blog 的，放在这里确实有点格格不入呢。
+class A{
+public:
+  explicit A(int n) { cout &lt;&lt; &quot;come from A(int n);&quot;;} 
+};
+
+A a = 5; // NO =&gt; no viable conversion from 'int' to 'A'
+A b(0.5); // ok
+a c = 0.5 //No =&gt; no viable conversion from 'double' to 'A'
+//如果没有加explicit，会自动的调用含有 int 的构造函数。
+</code></pre>
+
+<h5 id="inserter">inserter</h5>
+
+<p>​       本质上就是重载了操作符=。</p>
+
+<pre><code class="language-C++">int arrs[] = {1,5,789,1,2145,6,879,123};
+int n = sizeof(arrs)/sizeof(int);
+vector&lt;int&gt; lzk(n);
+copy(arrs, arrs+n, lzk.begin());    
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：通过上面的方式虽然可以实现 copy，但是在插入的时候 copy 是不对空间进行检查的，所以有可能会引发一些未知的错误。这个使用就可以使用 inserter。</p>
+</blockquote>
+
+<pre><code class="language-C++">//使用
+list&lt;int&gt; foo,bar;
+for(int i = i;i&lt;5;i++)
+{foo.push_back(i);bar.push_back(i*10);}
+
+list&lt;int&gt;::iterator it = foo.begin();
+advance(it,3);
+copy(bar.begin(),bar.end(),inserter(foo,it));
+
+//辅助函数
+template&lt;class Container,class Iterator&gt;
+inline insert_iterator&lt;Container i&gt;
+inserter(Container&amp; x,Iterator){
+	typedef typename Container::iterator iter;
+	return insert_iterator&lt;Container&gt;(x,i);
+}
+//源码
+template&lt;class Container&gt;
+class insert_iterator{
+protected:
+	Container* container;
+	typename Container:iterator iter;
+public:
+	typedef output_iterator_tag iterator_category;
+	insert_iterator(Constainer&amp; x,typename Container::iteraotr i)
+	:container(&amp;x),iter(i){}
+	
+	insert_iterator&lt;Constainer&gt;&amp; operator=(const typename Container::value_type&amp; value){
+		iter = container-&gt;insert(iter,value);
+		++iter;
+		return *this;
+	}
+};
+</code></pre>
+
+<h5 id="ostream-iterator-istream-iterator">ostream_iterator、istream_iterator</h5>
+
+<pre><code class="language-C++">//uses
+vector&lt;int&gt; arrs{1,4,978,4,55,12,4,6,78,94,0,68,46,51,367,98,46,16,8,3};
+std::ostream_iterator&lt;int&gt; out_it(std::cout,&quot;,&quot;);
+copy(arrs.begin(),arrs.end(),out_it);
+cout &lt;&lt; endl;
+
+//code
+template&lt;class T,class charT=char,class trains = char_trains&lt;charT&gt;&gt;
+class ostream_iterator:public iterator&lt;output_iterator_tag,void,void,void,void&gt;{
+	basic_ostream&lt;charT,trains&gt;* out_stream;
+	const chatT delim; //delimiter
+public:
+	typedef charT char_type;
+	typedef trains traits_type;
+	typedef basic_ostream&lt;charT,trains&gt; ostream_type;
+	ostream_iterator(ostream_type&amp; s):out_stream(&amp;s),delim(0){};
+	ostream_iteraotr(ostream_type&amp; s,const chatT* delimiter):out_stream(&amp;s),delim(delimiter){}
+	ostream_iterator(const ostream_iterator&lt;T,charT,traits&gt;&amp; x&gt;):out_stream(x.out_stream),delim(x.delim){}
+	~ostream_iterator(){}
+	ostream_iterator&lt;T,charT,traits&gt;&amp; operator=(const T&amp;value){
+		*out_stream &lt;&lt; value;
+		if(delim != 0) *out_stream &lt;&lt; delim;
+		return *this
+	}	
+}
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：stream_iterator也是重载了=呢</p>
+</blockquote>
+
+<pre><code class="language-c++">istream_iterator&lt;int&gt; iit(cin),eos;//eos =&gt; end of stream
+
+copy(iit,eos,inserter(c,c.begin()));
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：istream_iterator在创建的时候，就已经读入数据了。*操作符只是单纯的返回值，而++操作才是读入的操作。在构造函数调用了++操作符。</p>
+</blockquote>
+
+<h2 id="其他">其他</h2>
+
+<h5 id="万用hash-function">万用Hash Function</h5>
+
+<p>​       老实讲，Hash Function里面最主要的是那个 seed 得到的函数看不太明白，但是学好了一种很奇妙的任意多参数多写法。</p>
+
+<pre><code class="language-C++">template&lt;typename T,typename... types&gt;
+inline void hash_val(size_t&amp; seed,const T&amp; val,const Types&amp; ...args){
+	hash_combline(seed,val);
+}
+
+template&lt;typename... Types&gt;
+inline size_t hash_val(const Types&amp;... args){
+	size_t seed = 0;
+	hash_val(seed,args...);
+	return seed;
+}
+
+template&lt;typename T&gt;
+inline void hash_val(size_t&amp; seed,const T&amp; val){
+  hash_combine(seed,val);
+}
+
+inline void hash_combine(size_t &amp;seed,const T&amp; val){
+  seed ^= std::hash&lt;T&gt;()(val) + 0X9e3779b9 + (seed&lt;&lt;6) + (seed&gt;&gt;2);
+}
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：hash_combine 是这一系列函数的关键吧，他负责计算出 hash 值。这一个系列函数可以传入任意个参数。</p>
+
+<p>0X9e3779b9 这个数值，其实就是黄金比例。</p>
+</blockquote>
+
+<h5 id="tuple-元组">Tuple 元组</h5>
+
+<blockquote>
+<p>lzk_baggk：tuple 实现了对任意数量任意类型的组合。其实和上面的 Hash Function 有类似的地方，不过是通过继承来实现的。</p>
+</blockquote>
+
+<pre><code class="language-c++">template&lt;typename... Values&gt; class tuple;
+template&lt;&gt; class tuple&lt;&gt;{};//其实这里的代码很奇怪，一般的模版类应该是不行的，不过这里可以理解成是对可变模版的一个特化吧。
+template&lt;typename Head,typename... Tail&gt;
+class tuple&lt;Head,Tail&gt;
+:private tuple&lt;Tail...&gt; //最核心的一步
+{
+	typedef tuple&lt;Tail...&gt; inherited;
+public:
+	tuple(){}
+	tuple(Head v,Tail... vtail):m_head(v),inherited(vtail...){}
+	
+	typename Head::type head() { return m_head;}
+	inherited&amp; tail(){ return *this}
+protected:
+	Head m_head;
+};
+</code></pre>
+
+<h5 id="type-traits">type traits</h5>
+
+<pre><code class="language-c++">//泛化，之后需要根据你的来特化。gun 2.9版本
+template&lt;class type&gt;
+struct __type_traits{
+	typedef __true_type this_dummy_member_must_be_first;
+	typedef __false_type has_trivial_default_constructor;
+	typedef __false_type has_trivial_copy_constructor;
+	typedef __false_type has_trivial_assignment_operator;
+	typedef __false_type has_trivial_desturctor;
+	typedef __false_type is_POD_type;//plain old data
+};
+</code></pre>
+
+<blockquote>
+<p>lzk_baggk：2.9版本，之后的版本不再需要用户去编写偏特化。</p>
+</blockquote>
+
+<pre><code class="language-c++">//c++ 2.0的版本。也就是gun 4.0之后的版本
+template&lt;typename __tp&gt;
+	struct is_void
+    :public __is_void_helper&lt;typename remove_cv&lt;__tp&gt;::type&gt;::type{};
+//remove_cv is remove const and volatile
+template&lt;typename __tp&gt;
+	struct remove_const
+  { typedef __tp type;}
+template&lt;typename __tp&gt;
+	struct remove_const&lt;__tp const&gt; //一个偏特化,减少了作用域的范围。
+	{ typename __tp;} //去掉const
+	
+//remove voilate same as remove const
+//...
+//
+
+//remove cv 
+template&lt;typename __tp&gt;
+	struct remove_cv{
+		typedef typename 
+		remove_const&lt;typename remove_volatile&lt;__tp&gt;::type&gt;::type type;
+	};
+
+template&lt;typename&gt;
+	struct __is_void_helper
+    :public false_type {};
+template&lt;&gt;
+	struct __is_void_helper&lt;void&gt;
+		:public true_type{};
+
+template&lt;typename __tp&gt;
+	struct is_void
+    :public __is_void_hepler&lt;typename remove_cv&lt;__tp&gt;::type&gt;::type
+    {};
+
+//is_integal 类似,但是偏特化的时候会对bool\char\signed char\unsigend char\...一系列整形做偏特化。没有偏特化的就是假。
+</code></pre>
+
+<h5 id="cout">cout</h5>
+
+<pre><code class="language-c++">class _IO_ostream_withassign:public ostream
+</code></pre>
+
+<h5 id="moveable-class">moveable class</h5>
+
+<p>​       在c++2.0之后，加入了右值引用，为了实现移动语句。比如 int b = a + 1;这个语句，在执行 a + 1 的时候会自动的生成了一个临时的变量，之后再复制给 b，在销毁那个临时变量。但是 int &amp;&amp; b = a + 1;则是直接使用那个临时变量。同时也就多出了移动复制构造函数，移动赋值构造函数等等。</p>
+
+<pre><code class="language-C++">class lzk{
+public:
+  lzk(const lzk &amp;&amp; temp);
+  lzk&amp; operator=(const lzk &amp;&amp; temp);
+};
+</code></pre>
+
+<p>后记：</p>
+
+<p>​   这是跟着老师，学习的版本。如果后期有需要肯定会写一个总结版本。</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.baggk.xin/tags/stl/">stl</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/06/rb_tree/" data-tooltip="RB_tree">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/05/redis_source/" data-tooltip="Redis_source">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 lzk_baggk. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/06/rb_tree/" data-tooltip="RB_tree">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/05/redis_source/" data-tooltip="Redis_source">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.baggk.xin/images/lzk_weixing.jpg" alt="作者的图片" />
+    
+    <h4 id="about-card-name">lzk_baggk</h4>
+    
+      <div id="about-card-bio">想去的地方很远</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Student
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        China
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/06/rb_tree/">
+                <h3 class="media-heading">RB_tree</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于<strong>平衡</strong>的。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/stl/">
+                <h3 class="media-heading">Stl</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为<strong>侯捷老师</strong>的<strong>C++STL体系结构与内核分析</strong>的学习视频。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/redis_source/">
+                <h3 class="media-heading">Redis_source</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/redis_use/">
+                <h3 class="media-heading">Redis_use</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>​       redis入门，这遍博客主要是记录redis的基础使用。介绍了安装过程以及五种数据结构的基础使用。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/os_note_1/">
+                <h3 class="media-heading">OS_NOTE_1</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">
+                <h3 class="media-heading">UNIX环境高级编程</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>用来记录自己学习UNIX认为的重点，以及感悟。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://www.baggk.xin/2019/05/tinyhttp/">
+                <h3 class="media-heading">tinyHttp</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>最近在看TinyHttp的源码。记录了一些，比较模糊的概念。</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         7 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://www.baggk.xin/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.baggk.xin/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/www.baggk.xin\/2019\/05\/stl\/';
+          
+            this.page.identifier = '\/2019\/05\/stl\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>stl on lzk&#39;s blog</title>
+    <link>https://www.baggk.xin/tags/stl/</link>
+    <description>Recent content in stl on lzk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 May 2019 15:21:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.baggk.xin/tags/stl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Stl</title>
+      <link>https://www.baggk.xin/2019/05/stl/</link>
+      <pubDate>Mon, 27 May 2019 15:21:15 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/2019/05/stl/</guid>
+      <description>&lt;p&gt;​       这篇 blog 只要是按照六大部件的顺序来记录自己学习 STL 的过程。算是一个笔记吧。内容主要来源为&lt;strong&gt;侯捷老师&lt;/strong&gt;的&lt;strong&gt;C++STL体系结构与内核分析&lt;/strong&gt;的学习视频。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

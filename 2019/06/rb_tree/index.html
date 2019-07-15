@@ -8,19 +8,33 @@
 <meta name="generator" content="Hugo 0.55.6 with theme Tranquilpeak 0.4.3-SNAPSHOT">
 <meta name="author" content="lzk_baggk">
 <meta name="keywords" content="">
-<meta name="description" content="Hugo tranquilpeak theme demo">
+<meta name="description" content="​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于平衡的。">
 
 
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta name="twitter:title" content="Archives">
-<meta property="og:url" content="https://www.baggk.xin/archives/">
-<meta property="twitter:url" content="https://www.baggk.xin/archives/">
+<meta property="og:description" content="​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于平衡的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RB_tree">
+<meta name="twitter:title" content="RB_tree">
+<meta property="og:url" content="https://www.baggk.xin/2019/06/rb_tree/">
+<meta property="twitter:url" content="https://www.baggk.xin/2019/06/rb_tree/">
 <meta property="og:site_name" content="lzk&#39;s blog">
-<meta property="og:description" content="Hugo tranquilpeak theme demo">
-<meta name="twitter:description" content="Hugo tranquilpeak theme demo">
+<meta property="og:description" content="​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于平衡的。">
+<meta name="twitter:description" content="​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于平衡的。">
 <meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2019-06-17T19:27:02">
+  
+  
+    <meta property="article:modified_time" content="2019-06-17T19:27:02">
+  
+  
+  
+    
+      <meta property="article:section" content="数据结构">
+    
+  
+  
 
 
 <meta name="twitter:card" content="summary">
@@ -39,16 +53,14 @@
   <meta property="twitter:image" content="https://www.baggk.xin/images/lzk_weixing.jpg">
 
 
-    <title>Archives</title>
+    <title>RB_tree</title>
 
     <link rel="icon" href="https://www.baggk.xin/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.baggk.xin/archives/index.xml">
-    
 
     
 
-    <link rel="canonical" href="https://www.baggk.xin/archives/">
+    <link rel="canonical" href="https://www.baggk.xin/2019/06/rb_tree/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -68,7 +80,7 @@
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://www.baggk.xin/">lzk&#39;s blog</a>
@@ -88,7 +100,7 @@
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
@@ -186,64 +198,249 @@
   </div>
 </nav>
 
-      <div id="main" data-behavior="1"
+      
+
+      <div id="main" data-behavior="4"
         class="
                hasCoverMetaIn
                ">
-        <div id="archives" class="main-content-wrap">
-          <form id="filter-form" action="#">
-            <input name="date" type="text" class="form-control input--xlarge" placeholder="搜索日期 (YYYY/MM/DD)" autofocus="autofocus">
-          </form>
-          <h5 class="archive-result text-color-base text-xlarge" data-message-zero="" data-message-one="" data-message-other=""></h5>
-<section class="boxes">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
   
+    <h1 class="post-title" itemprop="headline">
+      RB_tree
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
     
-    <div class="archive archive-year box" data-date="2019">
-      <h4 class="archive-title" style="text-decoration: none;">2019</h4>
-      
-        <ul class="archive-posts archive-month" data-date="201906">
-          <h5 class="archive-title" style="text-decoration: none;">六月</h5>
-          
-            <li class="archive-post archive-day" data-date="20190617">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/06/rb_tree/">RB_tree</a>
-            </li>
-          
-        </ul>
-      
-        <ul class="archive-posts archive-month" data-date="201905">
-          <h5 class="archive-title" style="text-decoration: none;">五月</h5>
-          
-            <li class="archive-post archive-day" data-date="20190527">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/stl/">Stl</a>
-            </li>
-          
-            <li class="archive-post archive-day" data-date="20190523">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/redis_source/">Redis_source</a>
-            </li>
-          
-            <li class="archive-post archive-day" data-date="20190521">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/redis_use/">Redis_use</a>
-            </li>
-          
-            <li class="archive-post archive-day" data-date="20190519">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/os_note_1/">OS_NOTE_1</a>
-            </li>
-          
-            <li class="archive-post archive-day" data-date="20190516">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/unix%E7%8E%AF%E5%A2%83%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B/">UNIX环境高级编程</a>
-            </li>
-          
-            <li class="archive-post archive-day" data-date="20190515">
-              <a class="archive-post-title" href="https://www.baggk.xin/2019/05/tinyhttp/">tinyHttp</a>
-            </li>
-          
-        </ul>
-      
-    </div>
+      <time itemprop="datePublished" datetime="2019-06-17T19:27:02&#43;08:00">
+        
+  六月 17, 2019
+
+      </time>
+    
+    
   
-</section>
-        </div>
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://www.baggk.xin/categories/%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84">数据结构</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>​       红黑树是一种“伪平衡”搜索二叉树。最坏的情况下基本动态集合操作的时间复杂度为：$O(\lg n)$。红黑树确保没有一条路径会比其他的路径长出两倍。，因此是近似于<strong>平衡</strong>的。</p>
+
+<h3 id="定义">定义</h3>
+
+<p>​       主要包含五个属性：color、key、left、right 和 p 。如果一个结点没有子节点或者是父结点，则该结点相应的指针属性的值为NIL。红黑树有以下性质：</p>
+
+<ol>
+<li><p>每个节点或是红色的，或是黑色的。</p></li>
+
+<li><p>根节点是黑色的。</p></li>
+
+<li><p>每个叶结点（NIL）是黑色的。</p></li>
+
+<li><p>如果一个结点是红色的，则他的两个子结点都是黑色的。</p></li>
+
+<li><p>对每个结点，从该结点到其所有的后代叶结点的简单路径上，均包含相同数目的黑色结点。</p></li>
+</ol>
+
+<p>​       从某个结点 x 出发（不包含该结点）到达一个叶结点的任意一条简单路径上的黑色结点的个数称为该结点的黑高（black-height）,记为 $bh(x)$。根据第5条性质，从这一条出发，可以得出，从结点 x 到所有的后代叶结点黑高是相同的。于是定义红黑树的黑高就是根结点的黑高。</p>
+
+<h3 id="数学性质以及证明">数学性质以及证明</h3>
+
+<p><strong>引理 1：</strong> $一棵有 n 个内部结点的红黑树的高度至多为 2\lg^{(n+1)}$</p>
+
+<p><strong>证明：</strong> 第一步证明，<strong>任意 x 结点为根的子树中至少包含 $2^{bh(x)}-1$ 内部结点</strong>。使用数学归纳法：</p>
+
+<p>​       ①  当 x 为 NIL 的时候，$ bh(x) $ 为 0 ，则红黑树没有内部结点，结论成立。</p>
+
+<p>​       ②  当 x 为任意一个结点 k 时，$ n = 2^{bh(x)} -1$ 则有</p>
+
+<p>​          x 为 k 的子结点的时候， $hb(x)$有两种取值的可能性，$hb(x)$和$hb(x)-1$，主要取决于子结点的颜色。因为求最少的所以取$ hb(x) - 1$ ，得到:
+$$
+（2^{bh(x)-1}-1） + （2^{hb(x)-1}-1）+1 = 2^{hb(x)} -1
+$$
+​       ③   假设成立。</p>
+
+<p>第二步，证明$一棵有 n 个内部结点的红黑树的高度至多为 2\lg^{(n+1)}$。</p>
+
+<p>​       ④  假设树高为 h ，因为红黑树的性质 4 ，所以可以得出至少有一半层为黑色结点，即 $ dp(x) \geq h/2$ 。</p>
+
+<p>​       ⑤  代入第一步的结论，有$ n \geq 2^{h/2}-1 $ ，同时取对数不影响单调性，得到 $ lg _2^{(n+1)} \geq h/2$，最终化简得到：
+$$
+h \leq 2lg^{(n+1)}
+$$
+​       ⑥  证明完毕</p>
+
+<blockquote>
+<p>lzk_baggk：主要思路来自算法导论。由于树的基本操作的时间的复杂度都是由树的高度来确定的。所以可以推出是在$O(lg^n)$级别的。</p>
+</blockquote>
+
+<h3 id="插入">插入</h3>
+
+<p>​       对于红黑树的二叉搜索树的一种，对于搜索、遍历等操作和搜索树没有什么区别。但是插入删除等操作可能会破坏红黑树的性质呢。需要其他的补充操作。</p>
+
+<p>​       所有的插入操作分为三个部分，按照正常的搜索树的插入结点，然后再将插入结点标记为红色，最后进行调整。</p>
+
+<blockquote>
+<p>lzk_baggk：修复的操作在一个循环里面。算法本身是保障每次的操作只有性质4被破坏了。然后向上修复。插入的子结点为根的子树是符合红黑树的定义的。</p>
+</blockquote>
+
+<h4 id="搜索树正常插入">搜索树正常插入</h4>
+
+<pre><code class="language-c++">// 1. 找到插入的位置
+// 2. 插入，并且设置颜色为红色
+// 3. 调整
+</code></pre>
+
+<h4 id="调整">调整</h4>
+
+<p>​       如果树为空的话，则将颜色标记为黑色。如果父结点为黑色，则不需要任何调整。如果为红色，当叔结点为红色的时候，只需要将父结点与叔结点调整为黑色，并且把祖父结点调整为红色则好。如果叔结点为黑色，则需要考虑插入结点的位置。如果在父结点的右侧，则需要先左旋转，再右旋转。如果直接在左侧，则直接右旋转。</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/05/stl/" data-tooltip="Stl">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 lzk_baggk. All Rights Reserved
+  </span>
+</footer>
+
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.baggk.xin/2019/05/stl/" data-tooltip="Stl">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -470,6 +667,32 @@ $(document).ready(function() {
 });
 </script>
 
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/www.baggk.xin\/2019\/06\/rb_tree\/';
+          
+            this.page.identifier = '\/2019\/06\/rb_tree\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
 
 
 
