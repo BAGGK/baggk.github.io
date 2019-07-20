@@ -6,10 +6,37 @@
     <description>Recent content in Tags on lzk&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 May 2019 15:21:15 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jul 2019 23:45:21 +0800</lastBuildDate>
     
 	<atom:link href="https://www.baggk.xin/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>python</title>
+      <link>https://www.baggk.xin/tags/python/</link>
+      <pubDate>Thu, 18 Jul 2019 23:45:21 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tag1</title>
+      <link>https://www.baggk.xin/tags/tag1/</link>
+      <pubDate>Mon, 15 Jul 2019 17:30:20 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/tags/tag1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tag2</title>
+      <link>https://www.baggk.xin/tags/tag2/</link>
+      <pubDate>Mon, 15 Jul 2019 17:30:20 +0800</pubDate>
+      
+      <guid>https://www.baggk.xin/tags/tag2/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>stl</title>
